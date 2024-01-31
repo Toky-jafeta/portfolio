@@ -1,0 +1,102 @@
+@font-face {
+	font-family: 'Quicksand-Bold';
+	src: url('../assets/font/Quicksand-Bold.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Quicksand-Light';
+	src: url('../assets/font/Quicksand-Light.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Quicksand-Medium';
+	src: url('../assets/font/Quicksand-Medium.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Quicksand-Regular';
+	src: url('../assets/font/Quicksand-Regular.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Quicksand-SemiBold';
+	src: url('../assets/font/Quicksand-SemiBold.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Quicksand-VariableFont_wght';
+	src: url('../assets/font/Quicksand-VariableFont_wght.ttf') format('truetype')
+}
+@font-face {
+	font-family: 'Orbitron';
+	src: url('../assets/font/Orbitron-VariableFont_wght.ttf') format('truetype')
+}
+
+
+.header-nav{
+  display: flex;
+  justify-content: center;
+}
+
+.header-nav a {
+  margin-right: 10px;
+  text-decoration: None;
+  color: white;
+}
+
+td {
+  color: grey;
+  font-family: 'Quicksand-Regular', sans-serif;
+  font-size: 15px;
+}
+
+caption {
+  font-size: 22px;
+  text-align: left;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+* { box-sizing: border-box; }
+
+
+.timeline article + article {
+	margin-top: 20px;
+}
+
+.timeline article:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: calc( 100% + 26px );
+	background: #d6d6d6;
+	width: 24px;
+	height: 24px;
+	border: 6px #346abf solid;
+	border-radius: 50%;
+	z-index: 2;
+}
+
+.timeline article:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 0;
+	height: 0;
+	border-top: 20px solid transparent;
+	border-left: 16px solid #eeeeee;
+	border-bottom: 20px solid transparent;
+}
+
+.timeline article:nth-child(even) {
+	margin-left: calc( 50% + 48px );
+}
+
+.timeline article:nth-child(even):before {
+	left: auto;
+	right: calc( 100% + 26px );
+}
+
+.timeline article:nth-child(even):after {
+	left: auto;
+	right: 100%;
+	border-left: none;
+	border-right: 16px solid #eeeeee;
+}
