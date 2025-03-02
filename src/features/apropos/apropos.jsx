@@ -49,16 +49,6 @@ const SectionAboutTytle = styled.h1`
 const SectionAboutIntro = styled.div`
 
 `
-
-const SectionPresentation = styled.div`
-`
-
-const SectionPresentationLi = styled.li`
-`
-
-const SectionPresentationLiSpan = styled.span`
-`
-
 const SectionAboutIntroParagraph = styled.p`
     display: flex;
     align-items: center;
