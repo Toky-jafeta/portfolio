@@ -1,0 +1,54 @@
+{
+  "prefetchRate": 5,
+  "maxThreads": null,
+  "disableRoutePrefixing": false,
+  "outputFileRate": 100,
+  "extensions": [
+    ".js",
+    ".jsx"
+  ],
+  "minLoadTime": 200,
+  "disablePreload": false,
+  "disableRuntime": false,
+  "preloadPollInterval": 300,
+  "productionSourceMaps": false,
+  "silent": false,
+  "entry": "index.js",
+  "siteRoot": "https://127.0.0.1:3000",
+  "paths": {
+    "ROOT": "/home/toky/Documents/portfolio",
+    "SRC": "/home/toky/Documents/portfolio/src",
+    "DIST": "/home/toky/Documents/portfolio/dist",
+    "ASSETS": "/home/toky/Documents/portfolio/dist",
+    "PLUGINS": "/home/toky/Documents/portfolio/plugins",
+    "TEMP": "/home/toky/Documents/portfolio/tmp",
+    "ARTIFACTS": "/home/toky/Documents/portfolio/artifacts",
+    "PUBLIC": "/home/toky/Documents/portfolio/public",
+    "NODE_MODULES": "/home/toky/Documents/portfolio/node_modules",
+    "EXCLUDE_MODULES": "/home/toky/Documents/portfolio/node_modules",
+    "PACKAGE": "/home/toky/Documents/portfolio/package.json",
+    "HTML_TEMPLATE": "/home/toky/Documents/portfolio/dist/index.html",
+    "STATIC_DATA": "/home/toky/Documents/portfolio/dist/staticData"
+  },
+  "plugins": [
+    "/home/toky/Documents/portfolio"
+  ],
+  "basePath": "",
+  "publicPath": "https://127.0.0.1:3000/",
+  "assetsPath": "",
+  "extractCssChunks": false,
+  "inlineCss": false,
+  "babelExcludes": [],
+  "devServer": {
+    "host": "localhost",
+    "port": 3000
+  },
+  "terser": {
+    "terserOptions": {
+      "mangle": {},
+      "parse": {},
+      "compress": {},
+      "output": {}
+    }
+  }
+}

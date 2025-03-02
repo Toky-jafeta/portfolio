@@ -1,0 +1,176 @@
+{
+  "errors": [
+    "multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js\nModule not found: Error: Can't resolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\nresolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\n  Parsed request is a module\n  using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n    resolve as module\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/node_modules doesn't exist or is not a directory\n      /tmp/node_modules doesn't exist or is not a directory\n      /node_modules doesn't exist or is not a directory\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/node_modules]\n[/tmp/node_modules]\n[/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json]\n @ multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js main[0]",
+    "multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js\nModule not found: Error: Can't resolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\nresolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\n  Parsed request is a module\n  using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n    resolve as module\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/node_modules doesn't exist or is not a directory\n      /tmp/node_modules doesn't exist or is not a directory\n      /node_modules doesn't exist or is not a directory\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/node_modules]\n[/tmp/node_modules]\n[/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json]\n @ multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js main[1]",
+    "multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js\nModule not found: Error: Can't resolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\nresolve 'react-hot-loader/webpack' in '/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules'\n  Parsed request is a module\n  using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n    resolve as module\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules doesn't exist or is not a directory\n      /tmp/xfs-9846d0fb/node_modules doesn't exist or is not a directory\n      /tmp/node_modules doesn't exist or is not a directory\n      /node_modules doesn't exist or is not a directory\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n      looking for modules in /tmp/xfs-9846d0fb/dlx-24208/node_modules\n        using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules)\n          using description file: /tmp/xfs-9846d0fb/dlx-24208/package.json (relative path: ./node_modules/react-hot-loader/webpack)\n            no extension\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js doesn't exist\n            .js\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json doesn't exist\n            .json\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack doesn't exist\n            as directory\n              /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack doesn't exist\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/node_modules]\n[/tmp/xfs-9846d0fb/node_modules]\n[/tmp/node_modules]\n[/node_modules]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.js]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/node_modules/react-hot-loader/webpack.json]\n[/tmp/xfs-9846d0fb/dlx-24208/node_modules/react-hot-loader/webpack.json]\n @ multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js main[2]"
+  ],
+  "warnings": [],
+  "version": "4.47.0",
+  "hash": "88c0c3451cd836de4ab0",
+  "time": 465,
+  "builtAt": 1740910819806,
+  "publicPath": "/",
+  "outputPath": "/home/toky/Documents/portfolio/dist",
+  "assetsByChunkName": {
+    "main": "main.7cc0d7a4.js"
+  },
+  "assets": [
+    {
+      "name": "main.7cc0d7a4.js",
+      "size": 1429,
+      "chunks": [
+        0
+      ],
+      "chunkNames": [
+        "main"
+      ],
+      "info": {
+        "immutable": true
+      },
+      "emitted": false
+    }
+  ],
+  "filteredAssets": 0,
+  "entrypoints": {
+    "main": {
+      "chunks": [
+        0
+      ],
+      "assets": [
+        "main.7cc0d7a4.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "namedChunkGroups": {
+    "main": {
+      "chunks": [
+        0
+      ],
+      "assets": [
+        "main.7cc0d7a4.js"
+      ],
+      "children": {},
+      "childAssets": {}
+    }
+  },
+  "chunks": [
+    {
+      "id": 0,
+      "rendered": true,
+      "initial": true,
+      "entry": true,
+      "size": 52,
+      "names": [
+        "main"
+      ],
+      "files": [
+        "main.7cc0d7a4.js"
+      ],
+      "hash": "d5392d4bea63ca166d63",
+      "siblings": [],
+      "parents": [],
+      "children": [],
+      "childrenByOrder": {},
+      "modules": [
+        {
+          "id": 0,
+          "identifier": "multi /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapPlugins.js /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapTemplates.js /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapApp.js",
+          "name": "multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js",
+          "index": 0,
+          "index2": 0,
+          "size": 52,
+          "built": true,
+          "optional": false,
+          "prefetched": false,
+          "chunks": [
+            0
+          ],
+          "issuer": null,
+          "issuerId": null,
+          "issuerName": null,
+          "issuerPath": null,
+          "failed": false,
+          "errors": 0,
+          "warnings": 0,
+          "assets": [],
+          "reasons": [
+            {
+              "moduleId": null,
+              "moduleIdentifier": null,
+              "module": null,
+              "moduleName": null,
+              "type": "multi entry"
+            }
+          ],
+          "usedExports": true,
+          "providedExports": null,
+          "optimizationBailout": [
+            "ModuleConcatenation bailout: Module is not an ECMAScript module"
+          ],
+          "depth": 0
+        }
+      ],
+      "filteredModules": 0,
+      "origins": [
+        {
+          "module": "",
+          "moduleIdentifier": "",
+          "moduleName": "",
+          "loc": "main",
+          "request": null,
+          "reasons": []
+        }
+      ]
+    }
+  ],
+  "modules": [
+    {
+      "id": 0,
+      "identifier": "multi /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapPlugins.js /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapTemplates.js /tmp/xfs-9846d0fb/dlx-24208/node_modules/react-static/lib/bootstrapApp.js",
+      "name": "multi ../lib/bootstrapPlugins.js ../lib/bootstrapTemplates.js ../lib/bootstrapApp.js",
+      "index": 0,
+      "index2": 0,
+      "size": 52,
+      "built": true,
+      "optional": false,
+      "prefetched": false,
+      "chunks": [
+        0
+      ],
+      "issuer": null,
+      "issuerId": null,
+      "issuerName": null,
+      "issuerPath": null,
+      "failed": false,
+      "errors": 0,
+      "warnings": 0,
+      "assets": [],
+      "reasons": [
+        {
+          "moduleId": null,
+          "moduleIdentifier": null,
+          "module": null,
+          "moduleName": null,
+          "type": "multi entry"
+        }
+      ],
+      "usedExports": true,
+      "providedExports": null,
+      "optimizationBailout": [
+        "ModuleConcatenation bailout: Module is not an ECMAScript module"
+      ],
+      "depth": 0
+    }
+  ],
+  "filteredModules": 0,
+  "logging": {
+    "webpack.buildChunkGraph.visitModules": {
+      "entries": [],
+      "filteredEntries": 2,
+      "debug": false
+    }
+  },
+  "children": []
+}
