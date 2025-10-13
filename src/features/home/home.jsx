@@ -1,118 +1,183 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
-import profil from '../../assets/img/profil.jpg'
-import { useEffect, useState } from "react"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import profil from "../../assets/img/profil.jpg";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
-const DivSection = styled.div`
-    display: flex;
-    width: 100%;
-    height: 90vh;
-    background-color:#eeeeee;
-`
-const HomeSectionDescription = styled.section`
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 5%;
-`
-const HomeSectionDescriptionLinks = styled.p`
-    margin-top: 20px;
-`
-const HomeSectionDescriptionLink = styled(Link)`
-    border: solid grey;
-    font-family: 'Quicksand-SemiBold', sans-serif;
-    text-decoration: None;
-    padding:10px;
-    margin-right: 30px;
-    border-radius: 20px 20px;
-    color:black;
-    &:hover{
-        background-color:#008080;
-        color:white;
-        border: solid white;
-    }
-`
-const HomeSectionImage = styled.section`
-    width: 50%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
-    padding: 5%;
-`
+const DivSection = styled.section`
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 10vh);
+  background: linear-gradient(135deg, #e0f7fa, #ede7f6);
+  overflow: hidden;
 
-const HomeSectionImageImage = styled.img`
-    width: 100%;
-    border: solid;
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    min-height: auto;
+  }
+`;
 
-`
+const HomeSectionDescription = styled(motion.div)`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5% 8%;
+  color: #222;
 
-const HomeSectionDescriptionTitle = styled.h1`
-    font-family: 'Quicksand-Bold', sans-serif;
-    font-size: 50px;
-    margin-bottom: 0;
-`
+  @media (max-width: 900px) {
+    padding: 2% 5%; /* réduit le padding sur mobile */
+  }
+`;
 
-const HomeSectionDescriptionsecondTitle = styled.h3`
-    font-family: 'Quicksand-Bold', sans-serif;
-    font-size: 30px;
-    margin-bottom: 0;
-`
-const HomeSectionDescriptionDescription = styled.p`
-    font-family: 'Quicksand-SemiBold', sans-serif;
-    font-size: 15px;
-    text-align: justify;
-    color: grey;
-`
+const HomeSectionImage = styled(motion.div)`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+
+  @media (max-width: 900px) {
+    padding-top: 0;    /* supprime le padding supérieur */
+  }
+`;
 
 const ImgContainer = styled.div`
-    width: 60%;
-`
+  width: 65%;
+  max-width: 450px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-out;
+`;
 
-function Home(){
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    useEffect(() => {
-        const handleMouseMove = (event) => {
-            setMousePosition({ x: event.clientX, y: event.clientY });
-        };
+const HomeSectionImageImage = styled.img`
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: scale(1.05);
+  transition: transform 0.5s ease;
 
-        window.addEventListener("mousemove", handleMouseMove);
+  &:hover {
+    transform: scale(1.1);
+  }
 
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-        };
-    }, []);
+  @media (max-width: 900px) {
+    max-width: 300px;
+    margin-top: 0;
+  }
+`;
 
-    const calculateImageTransform = () => {
-        const xOffset = (mousePosition.x / window.innerWidth - 0.5) * 25;
-        const yOffset = (mousePosition.y / window.innerHeight - 0.5) * 25;
-    
-        return `translate(${xOffset}px, ${yOffset}px)`;
-      };
+const HomeSectionDescriptionTitle = styled.h1`
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 3.5rem;
+  margin-bottom: 10px;
+  color: #111;
+`;
 
-    return(
-        <DivSection>
-            <HomeSectionDescription>
-                <HomeSectionDescriptionTitle>Hello!</HomeSectionDescriptionTitle>
-                <HomeSectionDescriptionsecondTitle>Je suis Rasolomanitra Toky Jafeta</HomeSectionDescriptionsecondTitle>
-                <HomeSectionDescriptionDescription>Je suis spécialiste en réseaux et systèmes, ainsi que dans le développement web. <br />
-                ceci est mon portfolio, où j'espère que vous pourrez mieux me connaître en parcourant mes réalisations et mes competences.
-                </HomeSectionDescriptionDescription>
-                <HomeSectionDescriptionLinks>
-                    <HomeSectionDescriptionLink to="/experiences">Mes experiences</HomeSectionDescriptionLink>
-                    <HomeSectionDescriptionLink to="/services">Mes services</HomeSectionDescriptionLink>
-                </HomeSectionDescriptionLinks>
-            </HomeSectionDescription>
-            <HomeSectionImage>
-                <ImgContainer>
-                    <HomeSectionImageImage src={profil} alt="img-descrip" style={{ transform: calculateImageTransform() }}/>
-                </ImgContainer>
-            </HomeSectionImage>
-        </DivSection>
-    )
+const HomeSectionDescriptionSecondTitle = styled.h3`
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #008080;
+`;
+
+const HomeSectionDescriptionDescription = styled.p`
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+  text-align: justify;
+`;
+
+const HomeSectionDescriptionLinks = styled.div`
+  margin-top: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+
+  @media (max-width: 900px) {
+    flex-direction: column; /* force les boutons à se mettre en colonne */
+    align-items: center;    /* centre les boutons */
+  }
+`;
+
+const HomeSectionDescriptionLink = styled(Link)`
+  background: transparent;
+  color: #008080;
+  border: 2px solid #008080;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  padding: 12px 25px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  &:hover {
+    background: #008080;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 128, 128, 0.5);
+  }
+`;
+
+function Home() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePosition({ x: event.clientX, y: event.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  const calculateImageTransform = () => {
+    const xOffset = (mousePosition.x / window.innerWidth - 0.5) * 20;
+    const yOffset = (mousePosition.y / window.innerHeight - 0.5) * 20;
+    return `translate(${xOffset}px, ${yOffset}px)`;
+  };
+
+  return (
+    <DivSection>
+      <HomeSectionDescription
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <HomeSectionDescriptionTitle>Hello 👋</HomeSectionDescriptionTitle>
+        <HomeSectionDescriptionSecondTitle>
+          Je suis Rasolomanitra Toky Jafeta
+        </HomeSectionDescriptionSecondTitle>
+        <HomeSectionDescriptionDescription>
+          Spécialiste en <strong>réseaux, systèmes</strong> et{" "}
+          <strong>développement web</strong>, je conçois des solutions fiables et modernes.
+          <br />
+          Bienvenue sur mon portfolio — découvrez mes réalisations et compétences.
+        </HomeSectionDescriptionDescription>
+        <HomeSectionDescriptionLinks>
+          <HomeSectionDescriptionLink to="/experiences">
+            Mes expériences
+          </HomeSectionDescriptionLink>
+          <HomeSectionDescriptionLink to="/services">
+            Mes services
+          </HomeSectionDescriptionLink>
+        </HomeSectionDescriptionLinks>
+      </HomeSectionDescription>
+
+      <HomeSectionImage
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <ImgContainer style={{ transform: calculateImageTransform() }}>
+          <HomeSectionImageImage src={profil} alt="Profil" />
+        </ImgContainer>
+      </HomeSectionImage>
+    </DivSection>
+  );
 }
 
-export default Home
+export default Home;

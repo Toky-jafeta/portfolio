@@ -27,6 +27,10 @@
 	src: url('../assets/font/Orbitron-VariableFont_wght.ttf') format('truetype')
 }
 
+.App {
+  padding-top: 10vh;
+}
+
 
 .header-nav{
   display: flex;

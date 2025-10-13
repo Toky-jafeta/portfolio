@@ -1,43 +1,47 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-const ListItem = styled.li`
-	margin: 10px;
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	flex-direction: column;
-	text-transform: capitalize;
-	position: relative;
-    border: 1px solid #008080;
-    width: 30%;
-    height: 40vh;
-    overflow: auto;
-    padding-left: 20px;
-    padding-right: 20px;
-    border-radius: 20px;
-    
-    &:hover {
-        background-color: #008080;
-        border: solid #77B5FE;
-        color: white;
-        transition-property: background-color, color, border;
-        transition-duration: 300ms;
-        transition-delay: 0s;
-        transition-timing-function: ease-out;
-    }
-`
+const Card = styled.li`
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  cursor: pointer;
+  border: 2px solid #008080;
+  transition: all 0.3s ease;
+  height: 100%;
 
-function ServiceItem({id, name, description}){
-    const words = description.split(' ');
+  &:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(0,128,128,0.3);
+    background-color: #008080;
+    color: white;
+  }
 
-    const truncatedDescription = words.slice(0, 40).join(' ');
+  h2 {
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.6rem;
+  }
 
-    return(
-        <ListItem>
-            <h2>{name}</h2>
-            <p>{truncatedDescription}...</p>
-        </ListItem>
-    )
+  p {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+`;
+
+function ServiceItem({ id, name, description, onClick }) {
+  const truncatedDescription = description.split(' ').slice(0, 35).join(' ') + "...";
+
+  return (
+    <Card onClick={onClick}>
+      <h2>{name}</h2>
+      <p>{truncatedDescription}</p>
+    </Card>
+  );
 }
 
-export default ServiceItem
+export default ServiceItem;
