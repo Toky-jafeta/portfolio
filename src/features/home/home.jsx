@@ -96,7 +96,7 @@ function Home(){
     return(
         <DivSection>
             <HomeSectionDescription>
-                <HomeSectionDescriptionTitle>Hello test!</HomeSectionDescriptionTitle>
+                <HomeSectionDescriptionTitle>Hello!</HomeSectionDescriptionTitle>
                 <HomeSectionDescriptionsecondTitle>Je suis Rasolomanitra Toky Jafeta</HomeSectionDescriptionsecondTitle>
                 <HomeSectionDescriptionDescription>Je suis spécialiste en réseaux et systèmes, ainsi que dans le développement web. <br />
                 ceci est mon portfolio, où j'espère que vous pourrez mieux me connaître en parcourant mes réalisations et mes competences.
