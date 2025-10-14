@@ -24,6 +24,13 @@ const AproposContainer = styled.div`
   }
 `;
 
+const GreenSpan = styled.span`
+  color: #00ff00;
+`;
+const BlueSpan = styled.span`
+  color: #00bfff;
+`;
+
 const SectionHeader = styled(motion.div)`
   display: flex;
   flex-direction: column;
@@ -551,11 +558,5 @@ function Apropos() {
   );
 }
 
-const GreenSpan = styled.span`
-  color: #00ff00;
-`;
-const BlueSpan = styled.span`
-  color: #00bfff;
-`;
 
 export default Apropos;
