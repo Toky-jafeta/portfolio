@@ -180,6 +180,11 @@ function Header() {
             Expériences
           </StyledNavLink>
         </li>
+        <li role="none">
+          <StyledNavLink to="/realisations" onClick={() => setOpen(false)} role="menuitem">
+            Realisations
+          </StyledNavLink>
+        </li>
       </NavLinks>
     </HeaderContainer>
   );

@@ -27,7 +27,7 @@ const ServicesGrid = styled.ul`
 `;
 
 const ModalOverlay = styled.div`
-  position: fixed;       /* couvre tout l'écran */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -35,9 +35,9 @@ const ModalOverlay = styled.div`
   background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* commence en haut */
-  padding-top: 10vh;       /* sous le header */
-  z-index: 9999;            /* très au-dessus */
+  align-items: flex-start;
+  padding-top: 10vh;
+  z-index: 9999;
 `;
 
 const ModalContent = styled.div`
@@ -46,7 +46,7 @@ const ModalContent = styled.div`
   padding: 40px;
   max-width: 600px;
   width: 90%;
-  position: relative;       /* pour bouton X */
+  position: relative;
   animation: ${fadeIn} 0.3s ease-in-out;
 `;
 
@@ -60,7 +60,7 @@ const CloseButton = styled.button`
   font-size: 28px;
   cursor: pointer;
   color: #008080;
-  z-index: 10000;           /* toujours au-dessus */
+  z-index: 10000;
 `;
 
 
