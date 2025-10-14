@@ -7,16 +7,17 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CompetencePrincipale } from "../../datas/competences";
 import { Outils } from "../../datas/outils";
+import formationsData from "../../datas/formations.json";
+import certificationsData from "../../datas/certifications.json";
 
 const AproposContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: calc(100vh - 10vh); /* header fixe */
+  min-height: calc(100vh - 10vh);
   background: linear-gradient(135deg, #f0f4f8, #e8eef6);
   padding: 5% 10%;
   box-sizing: border-box;
-
   @media (max-width: 900px) {
     padding: 5% 5%;
   }
@@ -30,14 +31,14 @@ const SectionHeader = styled(motion.div)`
   margin-bottom: 40px;
 
   h1 {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 3rem;
     color: #008080;
     margin: 0;
   }
 
   p {
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-size: 1.1rem;
     color: #333;
   }
@@ -54,7 +55,7 @@ const SocialLinks = styled.div`
     align-items: center;
     gap: 5px;
     text-decoration: none;
-    font-family: 'Quicksand-Bold', sans-serif;
+    font-family: "Quicksand-Bold", sans-serif;
     font-size: 0.95rem;
     color: #0072b1;
     border: 2px solid #0072b1;
@@ -79,7 +80,7 @@ const DescriptionCard = styled(motion.div)`
   background-color: white;
   border-radius: 20px;
   padding: 25px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   margin-bottom: 40px;
 `;
 
@@ -91,7 +92,7 @@ const TableWrapper = styled(motion.div)`
   table {
     width: 100%;
     border-collapse: collapse;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
 
     caption {
       font-weight: bold;
@@ -117,11 +118,47 @@ const TableWrapper = styled(motion.div)`
 const AnimatedPrompt = styled(motion.pre)`
   background-color: #1e1e2f;
   color: #00ff00;
-  font-family: 'Courier New', monospace;
+  font-family: "Courier New", monospace;
   padding: 20px;
   border-radius: 15px;
   overflow-x: auto;
   margin-top: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+`;
+
+const CardGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+`;
+
+const InfoCard = styled(motion.div)`
+  background-color: #ffffff;
+  border-left: 6px solid #008080;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  h3 {
+    color: #008080;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    font-family: "Quicksand", sans-serif;
+    color: #444;
+    margin: 5px 0;
+  }
 `;
 
 function Apropos() {
@@ -177,22 +214,24 @@ function Apropos() {
     let cells = [];
     for (let j = 0; j < 5; j++) {
       const index = i * 5 + j;
-      cells.push(
-        <td key={index}>{CompetencePrincipale[index] || ""}</td>
-      );
+      cells.push(<td key={index}>{CompetencePrincipale[index] || ""}</td>);
     }
     tableRows.push(<tr key={i}>{cells}</tr>);
   }
 
   return (
     <AproposContainer>
+      {/* 🔹 Titre + Liens sociaux */}
       <SectionHeader
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
         <h1>À propos de moi</h1>
-        <p>{typedText}<span>{cursorVisible && "|"}</span></p>
+        <p>
+          {typedText}
+          <span>{cursorVisible && "|"}</span>
+        </p>
         <SocialLinks>
           <a href="https://www.linkedin.com/in/toky-rasolomanitra-121896220/">
             <img src={LinkedinLogo} alt="linkedin" /> LinkedIn
@@ -206,6 +245,7 @@ function Apropos() {
         </SocialLinks>
       </SectionHeader>
 
+      {/* 🔹 Bloc informations */}
       <DescriptionCard
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -214,29 +254,62 @@ function Apropos() {
         <AnimatedPrompt>{renderPromptText()}</AnimatedPrompt>
       </DescriptionCard>
 
-      <TableWrapper
+            <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ delay: 0.6 }}
+        style={{ color: "#008080", marginBottom: "15px" }}
       >
+        Formations
+      </motion.h2>
+      <CardGrid>
+        {formationsData.map((f, i) => (
+          <InfoCard key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <h3>{f.titre}</h3>
+            <p><strong>Établissement :</strong> {f.ecole}</p>
+            <p><strong>Année :</strong> {f.annee}</p>
+            <p><strong>Détails :</strong> {f.description}</p>
+          </InfoCard>
+        ))}
+      </CardGrid>
+
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        style={{ color: "#008080", marginBottom: "15px" }}
+      >
+        Certifications
+      </motion.h2>
+      <CardGrid>
+        {certificationsData.map((c, i) => (
+          <InfoCard key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <h3>{c.nom}</h3>
+            <p><strong>Organisation :</strong> {c.organisme}</p>
+            <p><strong>Année :</strong> {c.annee}</p>
+            <p><strong>ID :</strong> {c.id || "N/A"}</p>
+          </InfoCard>
+        ))}
+      </CardGrid>
+
+      <TableWrapper>
         <table>
           <caption>Compétences principales</caption>
           <tbody>{tableRows}</tbody>
         </table>
       </TableWrapper>
 
-      <TableWrapper
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 0.8 }}
-      >
+      {/* 🔹 Outils */}
+      <TableWrapper>
         <table>
           <caption>Outils / Années</caption>
           <tbody>
             {Array.from({ length: Math.ceil(Outils.length / 5) }, (row, rowIndex) => (
               <tr key={rowIndex}>
                 {Outils.slice(rowIndex * 5, rowIndex * 5 + 5).map((outils, index) => (
-                  <td key={index}>{outils.tecno}/{outils.annees}</td>
+                  <td key={index}>
+                    {outils.tecno}/{outils.annees}
+                  </td>
                 ))}
               </tr>
             ))}

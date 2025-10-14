@@ -30,14 +30,13 @@ const Logo = styled(motion.div)`
   user-select: none;
 `;
 
-/* UL sans puces ni marges par défaut */
 const NavLinks = styled.ul`
   display: flex;
   align-items: center;
   gap: 40px;
-  list-style: none;      /* supprime les puces */
-  margin: 0;             /* supprime les marges par défaut */
-  padding: 0;            /* supprime le padding par défaut */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 
   li {
     margin: 0;

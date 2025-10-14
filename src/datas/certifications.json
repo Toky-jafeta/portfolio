@@ -1,0 +1,20 @@
+[
+  {
+    "id": "FCF-2025",
+    "nom": "Fortinet Certified Fundamentals (FCF)",
+    "organisme": "Fortinet",
+    "annee": "2024"
+  },
+  {
+    "id": "FCA-2025",
+    "nom": "Fortinet Certified Associate (FCA)",
+    "organisme": "Fortinet",
+    "annee": "2024"
+  },
+  {
+    "id": "AWS-2025",
+    "nom": "AWS Cloud Practitioner",
+    "organisme": "Amazon Web Services",
+    "annee": "En cours"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "titre": "Master 2 en Informatique et Télécommunication",
+    "ecole": "Ecole Supérieur Polytechnique d'Antananarivo",
+    "annee": "2018",
+    "description": "Spécialisation en systèmes, réseaux et sécurité informatique."
+  },
+  {
+    "titre": "Licence en Informatique et Télécommunication",
+    "ecole": "Ecole Supérieur Polytechnique d'Antananarivo",
+    "annee": "2016",
+    "description": "Formation complète en développement, réseaux et bases de données."
+  }
+]
