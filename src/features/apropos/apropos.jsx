@@ -5,8 +5,9 @@ import DownloadLogo from "../../assets/logo/download.png";
 import gitLogo from "../../assets/logo/git.png";
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { CompetencePrincipale } from "../../datas/competences";
-import { Outils } from "../../datas/outils";
+import { CompetencesTechniques } from "../../datas/competences.js";
+import { OutilsTechniques } from "../../datas/outils";
+import { GestionProjet } from "../../datas/gestionProjet";
 import formationsData from "../../datas/formations.json";
 import certificationsData from "../../datas/certifications.json";
 
@@ -84,36 +85,6 @@ const DescriptionCard = styled(motion.div)`
   margin-bottom: 40px;
 `;
 
-const TableWrapper = styled(motion.div)`
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 40px;
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: "Quicksand", sans-serif;
-
-    caption {
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      text-align: left;
-      color: #008080;
-    }
-
-    td {
-      border: 1px solid #ddd;
-      padding: 12px 15px;
-      text-align: center;
-      color: #444;
-    }
-
-    tr:nth-child(even) {
-      background-color: #f7f7f7;
-    }
-  }
-`;
 
 const AnimatedPrompt = styled(motion.pre)`
   background-color: #1e1e2f;
@@ -196,6 +167,164 @@ const ModalContent = styled.div`
   }
 `;
 
+const CompetenceGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin: 50px 0;
+`;
+
+const CompetenceCard = styled(motion.div)`
+  background: linear-gradient(145deg, #ffffff, #f2f8f9);
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0, 128, 128, 0.1);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0, 128, 128, 0.2);
+  }
+
+  h3 {
+    color: #008080;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      font-family: "Quicksand", sans-serif;
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+
+      &::before {
+        content: "🔹";
+        color: #00a6a6;
+        font-size: 1rem;
+      }
+    }
+  }
+`;
+
+const StyledToolsTable = styled(motion.table)`
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  background-color: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 128, 128, 0.1);
+  font-family: "Quicksand", sans-serif;
+
+  thead {
+    background: linear-gradient(90deg, #008080, #00a6a6);
+    color: white;
+    text-align: left;
+
+    th {
+      padding: 15px 20px;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  tbody {
+    tr {
+      transition: all 0.3s ease;
+      &:nth-child(even) {
+        background-color: #f9fafa;
+      }
+      &:hover {
+        background-color: #e8f7f7;
+        transform: scale(1.01);
+      }
+    }
+
+    td {
+      padding: 15px 20px;
+      color: #333;
+      vertical-align: top;
+    }
+
+    td:first-child {
+      font-weight: bold;
+      color: #008080;
+      width: 22%;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+
+      li {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &::before {
+          content: "▹";
+          color: #00a6a6;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+`;
+
+const TimelineContainer = styled(motion.div)`
+  position: relative;
+  padding-left: 40px;
+  border-left: 3px solid #008080;
+
+  @media (max-width: 600px) {
+    padding-left: 25px;
+  }
+`;
+
+const TimelineItem = styled(motion.div)`
+  position: relative;
+  margin-bottom: 30px;
+  padding-left: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -12px;
+    top: 8px;
+    width: 15px;
+    height: 15px;
+    background: radial-gradient(circle, #00a6a6 0%, #008080 80%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 128, 128, 0.4);
+  }
+
+  p {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 15px 20px;
+    box-shadow: 0 8px 25px rgba(0, 128, 128, 0.08);
+    color: #333;
+    font-family: "Quicksand", sans-serif;
+    line-height: 1.5;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 128, 128, 0.15);
+    }
+  }
+`;
+
 function Apropos() {
   const [typedText, setTypedText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
@@ -242,16 +371,7 @@ function Apropos() {
       </span>
     ));
 
-  const numberOfRows = Math.ceil(CompetencePrincipale.length / 5);
-  let tableRows = [];
-  for (let i = 0; i < numberOfRows; i++) {
-    let cells = [];
-    for (let j = 0; j < 5; j++) {
-      const index = i * 5 + j;
-      cells.push(<td key={index}>{CompetencePrincipale[index] || ""}</td>);
-    }
-    tableRows.push(<tr key={i}>{cells}</tr>);
-  }
+  
 
   return (
     <AproposContainer>
@@ -339,29 +459,94 @@ function Apropos() {
         </ModalOverlay>
       )}
 
-      <TableWrapper>
-        <table>
-          <caption>Compétences principales</caption>
-          <tbody>{tableRows}</tbody>
-        </table>
-      </TableWrapper>
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1 }}
+        style={{ color: "#008080", marginBottom: "15px" }}
+      >
+        Compétences Techniques Principales
+      </motion.h2>
 
-      <TableWrapper>
-        <table>
-          <caption>Outils / Années</caption>
-          <tbody>
-            {Array.from({ length: Math.ceil(Outils.length / 5) }, (row, rowIndex) => (
-              <tr key={rowIndex}>
-                {Outils.slice(rowIndex * 5, rowIndex * 5 + 5).map((outils, index) => (
-                  <td key={index}>
-                    {outils.tecno}/{outils.annees}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </TableWrapper>
+      <CompetenceGrid>
+        {CompetencesTechniques.map((cat, index) => (
+          <CompetenceCard
+            key={index}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 * index }}
+          >
+            <h3>{cat.categorie}</h3>
+            <ul>
+              {cat.items.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </CompetenceCard>
+        ))}
+      </CompetenceGrid>
+
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        style={{ color: "#008080", marginBottom: "15px" }}
+      >
+        Outils & Technologies
+      </motion.h2>
+
+      <StyledToolsTable
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <thead>
+          <tr>
+            <th>Domaine</th>
+            <th>Outils / Technologies</th>
+          </tr>
+        </thead>
+        <tbody>
+          {OutilsTechniques.map((row, index) => (
+            <tr key={index}>
+              <td>{row.domaine}</td>
+              <td>
+                <ul>
+                  {row.outils.map((outil, i) => (
+                    <li key={i}>{outil}</li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </StyledToolsTable>
+
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        style={{ color: "#008080", marginBottom: "15px" }}
+      >
+        Gestion de Projet et Rédaction Technique
+      </motion.h2>
+
+      <TimelineContainer
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        {GestionProjet.map((point, i) => (
+          <TimelineItem
+            key={i}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: i * 0.2 }}
+          >
+            <p>{point}</p>
+          </TimelineItem>
+        ))}
+      </TimelineContainer>
     </AproposContainer>
   );
 }
