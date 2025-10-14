@@ -161,13 +161,48 @@ const InfoCard = styled(motion.div)`
   }
 `;
 
+const InfoCardCertif = styled(InfoCard)`
+  display: flex;
+  flex-direction: column;
+  img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  max-width: 90%;
+  max-height: 90%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+`;
+
 function Apropos() {
   const [typedText, setTypedText] = useState("");
   const [cursorVisible, setCursorVisible] = useState(true);
   const [promptText, setPromptText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [modalImage, setModalImage] = useState(null);
 
-  // Effet pour description
   useEffect(() => {
     const descriptionText =
       "Spécialiste en systèmes et réseaux et développement web. Basé à Antananarivo, Madagascar.";
@@ -180,7 +215,6 @@ function Apropos() {
     return () => clearInterval(interval);
   }, []);
 
-  // Effet pour prompt
   useEffect(() => {
     const text =
       "Nom:~$ Rasolomanitra\nPrénom:~$ Toky Jafeta\nDate de Naissance:~$ 15 Janvier 1994\nLieu de Naissance:~$ HJRA Antananarivo\nAdresse:~$ Lot FVF 03A Firavahana Fenoarivo\nVille:~$ Antananarivo\nPays:~$ Madagascar";
@@ -221,7 +255,6 @@ function Apropos() {
 
   return (
     <AproposContainer>
-      {/* 🔹 Titre + Liens sociaux */}
       <SectionHeader
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -245,7 +278,6 @@ function Apropos() {
         </SocialLinks>
       </SectionHeader>
 
-      {/* 🔹 Bloc informations */}
       <DescriptionCard
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
@@ -254,7 +286,7 @@ function Apropos() {
         <AnimatedPrompt>{renderPromptText()}</AnimatedPrompt>
       </DescriptionCard>
 
-            <motion.h2
+      <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
@@ -283,14 +315,29 @@ function Apropos() {
       </motion.h2>
       <CardGrid>
         {certificationsData.map((c, i) => (
-          <InfoCard key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <InfoCardCertif key={i} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h3>{c.nom}</h3>
             <p><strong>Organisation :</strong> {c.organisme}</p>
             <p><strong>Année :</strong> {c.annee}</p>
             <p><strong>ID :</strong> {c.id || "N/A"}</p>
-          </InfoCard>
+            {c.image && (
+              <img
+                src={c.image}
+                alt={c.nom}
+                onClick={() => setModalImage(c.image)}
+              />
+            )}
+          </InfoCardCertif>
         ))}
       </CardGrid>
+
+      {modalImage && (
+        <ModalOverlay onClick={() => setModalImage(null)}>
+          <ModalContent>
+            <img src={modalImage} alt="agrandi" />
+          </ModalContent>
+        </ModalOverlay>
+      )}
 
       <TableWrapper>
         <table>
@@ -299,7 +346,6 @@ function Apropos() {
         </table>
       </TableWrapper>
 
-      {/* 🔹 Outils */}
       <TableWrapper>
         <table>
           <caption>Outils / Années</caption>

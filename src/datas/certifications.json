@@ -1,20 +1,38 @@
 [
   {
-    "id": "FCF-2025",
-    "nom": "Fortinet Certified Fundamentals (FCF)",
-    "organisme": "Fortinet",
-    "annee": "2024"
+    "id": "1111706789TR",
+    "nom": "Fortinet Certified Professional Network Security (FCP)",
+    "organisme": "Fortinet institute",
+    "annee": "2025",
+    "image": "/certificat/fortinet_certified_profesionnal.jpg"
   },
   {
-    "id": "FCA-2025",
-    "nom": "Fortinet Certified Associate (FCA)",
-    "organisme": "Fortinet",
-    "annee": "2024"
+    "id": "9308953504TR",
+    "nom": "Fortinet Certified Associate in Cybersecurity (FCA)",
+    "organisme": "Fortinet Institute",
+    "annee": "2024",
+    "image": "/certificat/Fortinet_certified_advanced.png"
   },
   {
-    "id": "AWS-2025",
-    "nom": "AWS Cloud Practitioner",
-    "organisme": "Amazon Web Services",
-    "annee": "En cours"
+    "id": "16024943382TR",
+    "nom": "Fortinet Certified Fundamentals in Cybersecurity (FCF)",
+    "organisme": "Fortinet Institute",
+    "annee": "2024",
+    "image": "/certificat/Fortinet_certified_fundamentals.png"
+    
+  },
+  {
+    "id": "10XK4SYF7XWTZ",
+    "nom": "Fondamentaux Kubernetes",
+    "organisme": "Datascientist.fr",
+    "annee": "2025",
+    "image": "/certificat/kubernetes.jpg"
+  },
+  {
+    "id": "10XK4RAP9CRII",
+    "nom": "Introduction a docker",
+    "organisme": "Datascientist.fr",
+    "annee": "2025",
+    "image": "/certificat/docker.jpg"
   }
 ]
