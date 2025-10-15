@@ -120,7 +120,7 @@ function Services() {
   return (
     <ServiceContainer>
       <h1 style={{ fontFamily: "'Poppins', sans-serif", color: "#008080", marginBottom: "50px" }}>
-        Mes Services
+        MES SERVICES
       </h1>
       <ServicesGrid>
         {ServiceList.map(({ id, name, description }) => (

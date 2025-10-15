@@ -70,7 +70,7 @@ function ExperienceItem({ position, lieu, entreprise, poste, description_court, 
       <Title>{poste}</Title>
       <Detail><span>Période:</span> {periode}</Detail>
       <Detail><span>Lieu:</span> {lieu}</Detail>
-      <Detail><span>Entreprise:</span> {entreprise}</Detail>
+      <Detail><span>Entreprise:</span> <b>{entreprise}</b></Detail>
       <Detail><span>Description:</span> {description_court}</Detail>
     </ExperienceItemWrapper>
   );

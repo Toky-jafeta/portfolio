@@ -35,8 +35,8 @@ const ExperiencesSection = styled.section`
 
 const ChronoArrow = styled.div`
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 15px;
+  left: 48.8%;
   transform: translateX(-50%);
   width: 0;
   height: 0;
@@ -45,13 +45,18 @@ const ChronoArrow = styled.div`
   border-bottom: 25px solid #0072b1;
   z-index: 2;
   animation: ${pulse} 1.2s infinite;
+
+  @media (max-width: 900px) {
+    left: 47.5%;
+  }
 `;
 
 function Experiences() {
+  const sortedExperiences = [...ExperienceList].sort((a, b) => b.id - a.id);
   return (
     <ExperiencesSection>
       <ChronoArrow />
-      {ExperienceList.map(({ id, lieu, entreprise, poste, description_court, periode }, index) => (
+      {sortedExperiences.map(({ id, lieu, entreprise, poste, description_court, periode }, index) => (
         <ExperienceItem
           key={id}
           position={index % 2 === 0 ? "left" : "right"}

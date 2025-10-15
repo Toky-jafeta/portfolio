@@ -10,7 +10,7 @@ const Container = styled.section`
 
 const Title = styled.h2`
   font-size: 2rem;
-  color: #2b2d42;
+  color: #008080;
   text-align: center;
   margin-bottom: 40px;
   text-transform: uppercase;
