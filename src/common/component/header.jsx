@@ -184,6 +184,11 @@ function Header() {
             Realisations
           </StyledNavLink>
         </li>
+        <li role="none">
+          <StyledNavLink to="/contact" onClick={() => setOpen(false)} role="menuitem">
+            Contact
+          </StyledNavLink>
+        </li>
       </NavLinks>
     </HeaderContainer>
   );
