@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { motion } from "framer-motion";
-import axios from "axios";
+import emailjs from "@emailjs/browser";
 import MailIcon from "../../assets/img/mail.png";
 import PhoneIcon from "../../assets/img/phone.jpg";
 import LocationIcon from "../../assets/img/location.png";
@@ -189,46 +189,37 @@ const Loader = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
-// --- Component ---
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const formRef = useRef();
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData.name || !formData.email || !formData.message) return;
-
     setLoading(true);
     setSuccess(false);
     setError(false);
 
-    try {
-      const res = await axios.post(
-        "http://localhost:5000/send",
-        formData,
-        { headers: { "Content-Type": "application/json" } }
-      );
-
-      if (res.data.success) {
-        setSuccess(true);
-        setFormData({ name: "", email: "", message: "" });
-        setTimeout(() => setSuccess(false), 4000);
-      } else {
-        console.error("Erreur backend:", res.data.error);
-        setError(true);
-      }
-    } catch (err) {
-      console.error("Erreur Axios:", err);
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+    emailjs
+      .sendForm(
+        "service_2f0t0gp",
+        "template_4dxnzka",
+        formRef.current,
+        "eJUU_ODe3Re7ujzWD"
+      )
+      .then(
+        () => {
+          setSuccess(true);
+          formRef.current.reset();
+          setTimeout(() => setSuccess(false), 4000);
+        },
+        (err) => {
+          console.error("Erreur EmailJS:", err);
+          setError(true);
+        }
+      )
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -282,34 +273,15 @@ const Contact = () => {
         </ContactInfo>
 
         <ContactForm
+          ref={formRef}
           onSubmit={handleSubmit}
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
         >
-          <input
-            type="text"
-            name="name"
-            placeholder="Votre nom"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Votre adresse email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Votre message"
-            value={formData.message}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" name="from_name" placeholder="Votre nom" required />
+          <input type="email" name="from_email" placeholder="Votre adresse email" required />
+          <textarea name="message" placeholder="Votre message" required />
 
           <button type="submit" disabled={loading}>
             {loading ? <Loader /> : <><img src={SendIcon} alt="send" /> Envoyer</>}
