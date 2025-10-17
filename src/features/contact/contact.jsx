@@ -7,7 +7,7 @@ import PhoneIcon from "../../assets/img/phone.jpg";
 import LocationIcon from "../../assets/img/location.png";
 import SendIcon from "../../assets/img/send.png";
 
-// --- Animations ---
+
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -23,7 +23,7 @@ const spin = keyframes`
   100% { transform: rotate(360deg); }
 `;
 
-// --- Styled Components ---
+
 const ContactContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -189,6 +189,7 @@ const Loader = styled.div`
   animation: ${spin} 1s linear infinite;
 `;
 
+// --- Component ---
 const Contact = () => {
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -201,17 +202,38 @@ const Contact = () => {
     setSuccess(false);
     setError(false);
 
+    const form = formRef.current;
+    const name = form.from_name.value.trim();
+    const email = form.from_email.value.trim();
+    const message = form.message.value.trim();
+
+    if (!name || !email || !message) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+
+    const signedMessage = `
+      ${message}
+
+      ------------------------------
+      👤 ${name}
+      📧 ${email}
+      ------------------------------
+    `;
+    form.message.value = signedMessage;
+
     emailjs
       .sendForm(
         "service_2f0t0gp",
         "template_4dxnzka",
-        formRef.current,
+        form,
         "eJUU_ODe3Re7ujzWD"
       )
       .then(
         () => {
           setSuccess(true);
-          formRef.current.reset();
+          form.reset();
           setTimeout(() => setSuccess(false), 4000);
         },
         (err) => {
@@ -251,7 +273,7 @@ const Contact = () => {
             <img src={MailIcon} alt="email" />
             <div>
               <h4>Email</h4>
-              <p>trasolomanitra@gmail.com</p>
+              <p>contact@innovasec.io</p>
             </div>
           </InfoItem>
 
@@ -284,7 +306,7 @@ const Contact = () => {
           <textarea name="message" placeholder="Votre message" required />
 
           <button type="submit" disabled={loading}>
-            {loading ? <Loader /> : <><img src={SendIcon} alt="send" /> Envoyer</>}
+            {loading ? <Loader /> : (<><img src={SendIcon} alt="send" /> Envoyer</>)}
           </button>
 
           {success && (
@@ -303,7 +325,7 @@ const Contact = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              ❌ Une erreur est survenue. Réessayez plus tard.
+              ❌ Veuillez remplir tous les champs ou réessayez plus tard.
             </ErrorMessage>
           )}
         </ContactForm>
