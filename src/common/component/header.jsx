@@ -1,91 +1,104 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const HeaderContainer = styled(motion.header)`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 10vh;
+  height: ${props => props.$scrolled ? '70px' : '100px'};
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background: rgba(0, 128, 128, 0.9);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background: rgba(240, 253, 244, 0.95); // Green 50
+  border-bottom: 1px solid rgba(220, 252, 231, 0.8); // Green 100
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   z-index: 1000;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
+
+  @media (max-width: 768px) {
+    height: 70px;
+    padding: 0 20px;
+  }
 `;
 
-const Logo = styled(motion.div)`
-  font-family: 'Poppins', sans-serif;
+const Logo = styled.div`
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 1.8rem;
-  color: white;
+  font-size: 1.5rem;
+  color: #2c3e50;
   cursor: pointer;
-  letter-spacing: 1px;
   user-select: none;
+  flex-shrink: 0;
+
+  .dot {
+    color: #3498db;
+  }
 `;
 
 const NavLinks = styled.ul`
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
 
-  li {
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (max-width: 900px) {
-    position: absolute;
-    top: 10vh;
-    right: ${({ open }) => (open ? "0" : "-100%")};
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    right: ${({ $open }) => ($open ? "0" : "-100%")};
     flex-direction: column;
-    background: rgba(0, 128, 128, 0.95);
+    background: rgba(255, 255, 255, 0.98);
+    width: 280px;
+    height: 100vh;
+    padding: 80px 30px 40px;
+    gap: 15px;
+    transition: right 0.3s ease;
+    align-items: flex-start;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const NavItem = styled.li`
+  margin: 0;
+  padding: 0;
+  
+  @media (max-width: 768px) {
     width: 100%;
-    padding: 40px 0;
-    gap: 20px;
-    transition: right 0.4s ease-in-out;
-    align-items: center;
   }
 `;
 
 const StyledNavLink = styled(NavLink)`
-  font-family: 'Quicksand-SemiBold', sans-serif;
-  font-size: 1.1rem;
-  color: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: ${props => props.$isActive ? '#3498db' : '#2c3e50'};
   text-decoration: none;
-  position: relative;
-  transition: color 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: white;
-    transition: width 0.3s ease;
-  }
-
-  &:hover::after {
-    width: 100%;
+  &:hover {
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.05);
   }
 
   &.active {
-    color: #fff;
-    font-weight: 700;
+    color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+    font-weight: 600;
   }
 
-  &.active::after {
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 12px 20px;
+    display: block;
     width: 100%;
   }
 `;
@@ -94,103 +107,155 @@ const BurgerMenu = styled.button`
   display: none;
   cursor: pointer;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
   z-index: 1001;
   background: transparent;
   border: none;
   padding: 8px;
   align-items: center;
 
-  @media (max-width: 900px) {
+  @media (max-width: 768px) {
     display: flex;
   }
 
   span {
     width: 25px;
-    height: 3px;
-    background: white;
-    border-radius: 5px;
+    height: 2px;
+    background: #2c3e50;
+    border-radius: 1px;
     transition: all 0.3s ease;
-    display: block;
   }
 
-  ${({ open }) =>
-    open &&
-    `
+  ${({ $open }) => $open && `
     span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
+      transform: rotate(45deg) translate(6px, 6px);
     }
     span:nth-child(2) {
       opacity: 0;
     }
     span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
+      transform: rotate(-45deg) translate(6px, -6px);
     }
   `}
 `;
 
+const Overlay = styled.div`
+  display: ${props => props.$open ? 'block' : 'none'};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999;
+
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
 function Header() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [location]);
 
   return (
-    <HeaderContainer
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      <Logo
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        aria-label="Toky - logo"
+    <>
+      <HeaderContainer
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        $scrolled={scrolled}
       >
-        Toky<span style={{ color: "#00ffff" }}>.</span>
-      </Logo>
+        <Logo>
+          Toky<span className="dot">.</span>
+        </Logo>
 
-      <BurgerMenu
-        open={open}
-        onClick={() => setOpen((s) => !s)}
-        aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-        aria-expanded={open}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </BurgerMenu>
+        <nav>
+          <BurgerMenu 
+            $open={open} 
+            onClick={() => setOpen(!open)}
+            aria-label="Menu navigation"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </BurgerMenu>
 
-      <NavLinks open={open} role="menu" aria-hidden={!open && window.innerWidth <= 900}>
-        <li role="none">
-          <StyledNavLink to="/" onClick={() => setOpen(false)} role="menuitem">
-            Accueil
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/apropos" onClick={() => setOpen(false)} role="menuitem">
-            À propos
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/services" onClick={() => setOpen(false)} role="menuitem">
-            Services
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/experiences" onClick={() => setOpen(false)} role="menuitem">
-            Expériences
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/realisations" onClick={() => setOpen(false)} role="menuitem">
-            Realisations
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/contact" onClick={() => setOpen(false)} role="menuitem">
-            Contact
-          </StyledNavLink>
-        </li>
-      </NavLinks>
-    </HeaderContainer>
+          <NavLinks $open={open}>
+            <NavItem>
+              <StyledNavLink 
+                to="/" 
+                $isActive={location.pathname === '/'}
+                onClick={() => setOpen(false)}
+              >
+                Accueil
+              </StyledNavLink>
+            </NavItem>
+            <NavItem>
+              <StyledNavLink 
+                to="/apropos" 
+                $isActive={location.pathname === '/apropos'}
+                onClick={() => setOpen(false)}
+              >
+                À propos
+              </StyledNavLink>
+            </NavItem>
+            <NavItem>
+              <StyledNavLink 
+                to="/services" 
+                $isActive={location.pathname === '/services'}
+                onClick={() => setOpen(false)}
+              >
+                Services
+              </StyledNavLink>
+            </NavItem>
+            <NavItem>
+              <StyledNavLink 
+                to="/experiences" 
+                $isActive={location.pathname === '/experiences'}
+                onClick={() => setOpen(false)}
+              >
+                Expériences
+              </StyledNavLink>
+            </NavItem>
+            <NavItem>
+              <StyledNavLink 
+                to="/realisations" 
+                $isActive={location.pathname === '/realisations'}
+                onClick={() => setOpen(false)}
+              >
+                Réalisations
+              </StyledNavLink>
+            </NavItem>
+            <NavItem>
+              <StyledNavLink 
+                to="/contact" 
+                $isActive={location.pathname === '/contact'}
+                onClick={() => setOpen(false)}
+              >
+                Contact
+              </StyledNavLink>
+            </NavItem>
+          </NavLinks>
+        </nav>
+
+        <Overlay $open={open} onClick={() => setOpen(false)} />
+      </HeaderContainer>
+    </>
   );
 }
 
