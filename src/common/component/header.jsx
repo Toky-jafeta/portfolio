@@ -1,195 +1,199 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-const HeaderContainer = styled(motion.header)`
+const HeaderContainer = styled.header`
   position: fixed;
-  top: 0;
+  top: 3px;
   left: 0;
   width: 100%;
-  height: 10vh;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background: rgba(0, 128, 128, 0.9);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  background: ${({ $scrolled }) => $scrolled ? 'rgba(10, 14, 23, 0.92)' : 'transparent'};
+  backdrop-filter: ${({ $scrolled }) => $scrolled ? 'blur(20px)' : 'none'};
+  border-bottom: ${({ $scrolled }) => $scrolled ? '1px solid var(--border)' : '1px solid transparent'};
   z-index: 1000;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
 `;
 
-const Logo = styled(motion.div)`
-  font-family: 'Poppins', sans-serif;
+const Logo = styled.a`
+  font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.8rem;
-  color: white;
-  cursor: pointer;
-  letter-spacing: 1px;
-  user-select: none;
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  span { color: var(--accent-primary); }
 `;
 
-const NavLinks = styled.ul`
+const Nav = styled.nav`
   display: flex;
   align-items: center;
-  gap: 40px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    margin: 0;
-    padding: 0;
-  }
+  gap: 32px;
 
   @media (max-width: 900px) {
-    position: absolute;
-    top: 10vh;
-    right: ${({ open }) => (open ? "0" : "-100%")};
-    flex-direction: column;
-    background: rgba(0, 128, 128, 0.95);
+    position: fixed;
+    top: 73px;
+    right: ${({ $open }) => $open ? '0' : '-100%'};
     width: 100%;
+    flex-direction: column;
+    background: rgba(10, 14, 23, 0.98);
+    backdrop-filter: blur(20px);
     padding: 40px 0;
-    gap: 20px;
-    transition: right 0.4s ease-in-out;
-    align-items: center;
+    gap: 25px;
+    transition: right 0.4s ease;
+    border-bottom: 1px solid var(--border);
   }
 `;
 
-const StyledNavLink = styled(NavLink)`
-  font-family: 'Quicksand-SemiBold', sans-serif;
-  font-size: 1.1rem;
-  color: white;
+const NavLink = styled.a`
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
   text-decoration: none;
   position: relative;
+  letter-spacing: 0.3px;
   transition: color 0.3s ease;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -4px;
     left: 0;
     width: 0%;
     height: 2px;
-    background: white;
+    background: var(--accent-primary);
     transition: width 0.3s ease;
   }
 
-  &:hover::after {
-    width: 100%;
+  &:hover, &.active {
+    color: var(--accent-primary);
   }
-
-  &.active {
-    color: #fff;
-    font-weight: 700;
-  }
-
-  &.active::after {
+  &:hover::after, &.active::after {
     width: 100%;
   }
 `;
 
-const BurgerMenu = styled.button`
+const AvailableBadge = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #22c55e;
+  font-family: var(--font-mono);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  padding: 6px 14px;
+  border-radius: 50px;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  }
+
+  @media (max-width: 900px) {
+    display: none;
+  }
+`;
+
+const Burger = styled.button`
   display: none;
   cursor: pointer;
   flex-direction: column;
   gap: 5px;
-  z-index: 1001;
   background: transparent;
   border: none;
   padding: 8px;
-  align-items: center;
+  z-index: 1001;
 
-  @media (max-width: 900px) {
-    display: flex;
-  }
+  @media (max-width: 900px) { display: flex; }
 
   span {
-    width: 25px;
-    height: 3px;
-    background: white;
-    border-radius: 5px;
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
     transition: all 0.3s ease;
-    display: block;
   }
 
-  ${({ open }) =>
-    open &&
-    `
-    span:nth-child(1) {
-      transform: rotate(45deg) translateY(8px);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: rotate(-45deg) translateY(-8px);
-    }
+  ${({ $open }) => $open && `
+    span:nth-child(1) { transform: rotate(45deg) translateY(7px); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: rotate(-45deg) translateY(-7px); }
   `}
 `;
 
+const sections = [
+  { id: 'accueil', label: 'Accueil' },
+  { id: 'apropos', label: 'À propos' },
+  { id: 'expertise', label: 'Expertise' },
+  { id: 'realisations', label: 'Réalisations' },
+  { id: 'services', label: 'Services' },
+  { id: 'certifications', label: 'Certifications' },
+  { id: 'contact', label: 'Contact' },
+];
+
 function Header() {
+  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('accueil');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+
+      const offsets = sections.map(s => {
+        const el = document.getElementById(s.id);
+        return el ? { id: s.id, top: el.offsetTop - 100 } : null;
+      }).filter(Boolean);
+
+      const current = offsets.reverse().find(s => window.scrollY >= s.top);
+      if (current) setActiveSection(current.id);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleClick = (e, id) => {
+    e.preventDefault();
+    setOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <HeaderContainer
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-    >
-      <Logo
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        aria-label="Toky - logo"
-      >
-        Toky<span style={{ color: "#00ffff" }}>.</span>
+    <HeaderContainer $scrolled={scrolled}>
+      <Logo href="#accueil" onClick={(e) => handleClick(e, 'accueil')}>
+        Toky<span>.</span>
       </Logo>
 
-      <BurgerMenu
-        open={open}
-        onClick={() => setOpen((s) => !s)}
-        aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-        aria-expanded={open}
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </BurgerMenu>
+      <Burger $open={open} onClick={() => setOpen(s => !s)} aria-label="Menu">
+        <span /><span /><span />
+      </Burger>
 
-      <NavLinks open={open} role="menu" aria-hidden={!open && window.innerWidth <= 900}>
-        <li role="none">
-          <StyledNavLink to="/" onClick={() => setOpen(false)} role="menuitem">
-            Accueil
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/apropos" onClick={() => setOpen(false)} role="menuitem">
-            À propos
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/services" onClick={() => setOpen(false)} role="menuitem">
-            Services
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/experiences" onClick={() => setOpen(false)} role="menuitem">
-            Expériences
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/realisations" onClick={() => setOpen(false)} role="menuitem">
-            Realisations
-          </StyledNavLink>
-        </li>
-        <li role="none">
-          <StyledNavLink to="/contact" onClick={() => setOpen(false)} role="menuitem">
-            Contact
-          </StyledNavLink>
-        </li>
-      </NavLinks>
+      <Nav $open={open}>
+        {sections.map(s => (
+          <NavLink
+            key={s.id}
+            href={`#${s.id}`}
+            className={activeSection === s.id ? 'active' : ''}
+            onClick={(e) => handleClick(e, s.id)}
+          >
+            {s.label}
+          </NavLink>
+        ))}
+        <AvailableBadge>Disponible</AvailableBadge>
+      </Nav>
     </HeaderContainer>
   );
 }

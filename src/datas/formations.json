@@ -1,14 +1,14 @@
 [
   {
-    "titre": "Master 2 en Ingenerie des systemes et reseaux",
-    "ecole": "Ecole Supérieur Polytechnique d'Antananarivo",
+    "titre": "Master 2 en Ingénierie des Systèmes et Réseaux",
+    "ecole": "École Supérieure Polytechnique d'Antananarivo (ESPA)",
     "annee": "2018",
-    "description": "Spécialisation dans l'ingenerie des systèmes et réseaux."
+    "description": "Spécialisation approfondie en architecture réseau, systèmes distribués et sécurité informatique. Mémoire sur l'optimisation des architectures WAN."
   },
   {
-    "titre": "Licence en Administration des systemes et reseaux",
-    "ecole": "Ecole Supérieur Polytechnique d'Antananarivo",
+    "titre": "Licence en Administration des Systèmes et Réseaux",
+    "ecole": "École Supérieure Polytechnique d'Antananarivo (ESPA)",
     "annee": "2016",
-    "description": "Administration des systèmes et réseaux."
+    "description": "Fondamentaux en administration système Linux/Windows, réseaux TCP/IP, routage et commutation."
   }
 ]

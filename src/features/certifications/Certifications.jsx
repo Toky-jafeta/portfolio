@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from '../../common/hooks/useInView';
-import { ServiceList } from '../../datas/servicesList';
+import certificationsData from '../../datas/certifications.json';
 
 const Section = styled.section`
   padding: 100px 8%;
@@ -43,7 +43,7 @@ const Subtitle = styled.p`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
   opacity: ${({ $v }) => $v ? 1 : 0};
   transform: translateY(${({ $v }) => $v ? 0 : '30px'});
@@ -54,12 +54,11 @@ const Card = styled.div`
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 30px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.4s ease;
-  cursor: pointer;
 
   &:hover {
     border-color: var(--border-accent);
@@ -68,44 +67,48 @@ const Card = styled.div`
   }
 `;
 
-const CardTitle = styled.h3`
+const CardHeader = styled.div`
+  margin-bottom: 15px;
+`;
+
+const Org = styled.span`
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+`;
+
+const CertName = styled.h3`
   font-family: var(--font-heading);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: 15px;
-  line-height: 1.4;
-  transition: color 0.3s ease;
-
-  ${Card}:hover & {
-    color: var(--accent-primary);
-  }
+  margin-top: 5px;
 `;
 
-const Description = styled.p`
-  font-size: 0.9rem;
+const CertMeta = styled.div`
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 20px;
-  flex-grow: 1;
+  margin-top: 10px;
+  span { color: var(--text-muted); }
 `;
 
-const LearnMore = styled.span`
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
+const ImageWrapper = styled.div`
+  margin-top: 15px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  cursor: zoom-in;
+  position: relative;
 
-  &::after {
-    content: '→';
+  img {
+    width: 100%;
     transition: transform 0.3s ease;
   }
 
-  ${Card}:hover &::after {
-    transform: translateX(5px);
+  &:hover img {
+    transform: scale(1.05);
   }
 `;
 
@@ -115,8 +118,8 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 14, 23, 0.8);
-  backdrop-filter: blur(8px);
+  background: rgba(10, 14, 23, 0.85);
+  backdrop-filter: blur(10px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,79 +128,74 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 40px;
-  max-width: 600px;
+  max-width: 800px;
   width: 100%;
   position: relative;
-  box-shadow: var(--shadow);
-  border-top: 4px solid var(--accent-primary);
+
+  img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: -40px;
+  right: 0;
   background: transparent;
   border: none;
   font-size: 2rem;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   cursor: pointer;
   line-height: 1;
-  transition: color 0.3s ease;
 
   &:hover { color: var(--accent-primary); }
 `;
 
-const ModalTitle = styled.h3`
-  font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 20px;
-`;
-
-const ModalDesc = styled.p`
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
-`;
-
-export default function Services() {
+export default function Certifications() {
   const [headerRef, headerV] = useInView();
   const [gridRef, gridV] = useInView();
-  const [selectedService, setSelectedService] = useState(null);
+  const [activeImage, setActiveImage] = useState(null);
 
   return (
-    <Section id="services">
+    <Section id="certifications">
       <Header ref={headerRef} $v={headerV}>
-        <Label>{"// Services"}</Label>
-        <Title>Ce que je propose</Title>
+        <Label>{"// Accréditations"}</Label>
+        <Title>Certifications & Badges</Title>
         <Subtitle>
-          Des prestations sur-mesure adaptées à vos besoins technologiques, alliant sécurité, performance et scalabilité.
+          Mes titres de compétences officiels et certifications dans les domaines des réseaux, de la cybersécurité et du cloud.
         </Subtitle>
       </Header>
 
       <Grid ref={gridRef} $v={gridV}>
-        {ServiceList.map((service) => (
-          <Card key={service.id} onClick={() => setSelectedService(service)}>
+        {certificationsData.map((c, i) => (
+          <Card key={i}>
             <div>
-              <CardTitle>{service.name}</CardTitle>
-              <Description>{service.description}</Description>
+              <CardHeader>
+                <Org>{c.organisme}</Org>
+                <CertName>{c.nom}</CertName>
+              </CardHeader>
+              <CertMeta>
+                <div>ID: <span>{c.id || 'N/A'}</span></div>
+                <div>Année: <span>{c.annee}</span></div>
+              </CertMeta>
             </div>
-            <LearnMore>En savoir plus</LearnMore>
+            {c.image && (
+              <ImageWrapper onClick={() => setActiveImage(c.image)}>
+                <img src={c.image} alt={c.nom} />
+              </ImageWrapper>
+            )}
           </Card>
         ))}
       </Grid>
 
-      {selectedService && (
-        <ModalOverlay onClick={() => setSelectedService(null)}>
+      {activeImage && (
+        <ModalOverlay onClick={() => setActiveImage(null)}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
-            <CloseButton onClick={() => setSelectedService(null)}>&times;</CloseButton>
-            <ModalTitle>{selectedService.name}</ModalTitle>
-            <ModalDesc>{selectedService.description}</ModalDesc>
+            <CloseButton onClick={() => setActiveImage(null)}>&times;</CloseButton>
+            <img src={activeImage} alt="Certificate view" />
           </ModalContent>
         </ModalOverlay>
       )}

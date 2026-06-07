@@ -1,29 +1,34 @@
 import './App.css';
-import Home from '../features/home/home';
+import TerminalWidget from '../common/component/TerminalWidget';
 import Header from '../common/component/header';
-import Apropos from '../features/apropos/apropos';
+import ScrollProgress from '../common/component/ScrollProgress';
+import Footer from '../common/component/Footer';
+import Hero from '../features/hero/Hero';
+import About from '../features/about/About';
+import Expertise from '../features/expertise/Expertise';
+import Realisations from '../features/realisation/realisation';
 import Services from '../features/service/service';
 import Experiences from '../features/experiences/experiences';
-import Realisation from '../features/realisation/realisation'
-import Error from '../common/component/error';
-import Contact from '../features/contact/contact'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Certifications from '../features/certifications/Certifications';
+import Contact from '../features/contact/contact';
 
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path='/apropos' element={<Apropos />} />
-          <Route path='/services' element={<Services />} />
-          <Route path='/experiences' element={<Experiences />} />
-          <Route path='/realisations' element={<Realisation />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='*' element={<Error />} />
-        </Routes>
-      </Router>
+      <ScrollProgress />
+      <Header />
+      <main>
+        <Hero />
+        <About />
+        <Expertise />
+        <Realisations />
+        <Services />
+        <Experiences />
+        <Certifications />
+        <Contact />
+      </main>
+      <Footer />
+      <TerminalWidget />
     </div>
   );
 }

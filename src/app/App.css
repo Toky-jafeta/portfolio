@@ -1,106 +1,83 @@
-@font-face {
-	font-family: 'Quicksand-Bold';
-	src: url('../assets/font/Quicksand-Bold.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Quicksand-Light';
-	src: url('../assets/font/Quicksand-Light.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Quicksand-Medium';
-	src: url('../assets/font/Quicksand-Medium.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Quicksand-Regular';
-	src: url('../assets/font/Quicksand-Regular.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Quicksand-SemiBold';
-	src: url('../assets/font/Quicksand-SemiBold.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Quicksand-VariableFont_wght';
-	src: url('../assets/font/Quicksand-VariableFont_wght.ttf') format('truetype')
-}
-@font-face {
-	font-family: 'Orbitron';
-	src: url('../assets/font/Orbitron-VariableFont_wght.ttf') format('truetype')
+:root {
+  /* Backgrounds — deep navy, professionnel et sobre */
+  --bg-primary: #080c14;
+  --bg-secondary: #0f1420;
+  --bg-card: #141928;
+  --bg-card-hover: #1a2035;
+
+  /* Accents — Indigo électrique (expertise) + Bleu royal (tech) + Ambre (leadership) */
+  --accent-primary: #6366f1;       /* Indigo — votre signature */
+  --accent-secondary: #3b82f6;     /* Bleu royal — ingénierie */
+  --accent-tertiary: #f59e0b;      /* Ambre — entrepreneuriat */
+  --accent-glow: rgba(99, 102, 241, 0.2);
+
+  /* Texte */
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Bordures */
+  --border: #1e2538;
+  --border-accent: rgba(99, 102, 241, 0.35);
+
+  /* Ombres */
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-accent: 0 0 40px rgba(99, 102, 241, 0.18);
+  --shadow-warm: 0 0 30px rgba(245, 158, 11, 0.12);
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  /* Typographie */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 .App {
-  padding-top: 10vh;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
 }
 
-
-.header-nav{
-  display: flex;
-  justify-content: center;
+/* Fade-in animation for scroll reveal */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.header-nav a {
-  margin-right: 10px;
-  text-decoration: None;
-  color: white;
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-td {
-  color: grey;
-  font-family: 'Quicksand-Regular', sans-serif;
-  font-size: 15px;
+.fade-in-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-caption {
-  font-size: 22px;
-  text-align: left;
-  margin-bottom: 20px;
-  font-weight: bold;
+.fade-in-left.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-* { box-sizing: border-box; }
-
-
-.timeline article + article {
-	margin-top: 20px;
+.fade-in-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
-.timeline article:before {
-	content: "";
-	display: block;
-	position: absolute;
-	top: 0;
-	left: calc( 100% + 26px );
-	background: #d6d6d6;
-	width: 24px;
-	height: 24px;
-	border: 6px #346abf solid;
-	border-radius: 50%;
-	z-index: 2;
+.fade-in-right.visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
-.timeline article:after {
-	content: "";
-	position: absolute;
-	top: 0;
-	left: 100%;
-	width: 0;
-	height: 0;
-	border-top: 20px solid transparent;
-	border-left: 16px solid #eeeeee;
-	border-bottom: 20px solid transparent;
-}
-
-.timeline article:nth-child(even) {
-	margin-left: calc( 50% + 48px );
-}
-
-.timeline article:nth-child(even):before {
-	left: auto;
-	right: calc( 100% + 26px );
-}
-
-.timeline article:nth-child(even):after {
-	left: auto;
-	right: 100%;
-	border-left: none;
-	border-right: 16px solid #eeeeee;
+@media (max-width: 768px) {
+  :root {
+    font-size: 15px;
+  }
 }

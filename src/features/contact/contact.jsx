@@ -1,206 +1,205 @@
-import React, { useState, useRef } from "react";
-import styled, { keyframes } from "styled-components";
-import { motion } from "framer-motion";
-import emailjs from "@emailjs/browser";
-import MailIcon from "../../assets/img/mail.png";
-import PhoneIcon from "../../assets/img/phone.jpg";
-import LocationIcon from "../../assets/img/location.png";
-import SendIcon from "../../assets/img/send.png";
+import React, { useState, useRef } from 'react';
+import styled from 'styled-components';
+import { useInView } from '../../common/hooks/useInView';
+import emailjs from '@emailjs/browser';
+import MailIcon from '../../assets/img/mail.png';
+import PhoneIcon from '../../assets/img/phone.jpg';
+import LocationIcon from '../../assets/img/location.png';
 
-
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+const Section = styled.section`
+  padding: 100px 8%;
+  background: var(--bg-primary);
+  position: relative;
+  @media (max-width: 768px) { padding: 60px 5%; }
 `;
 
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-`;
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-
-const ContactContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  background: linear-gradient(135deg, #f0f4f8, #e8eef6);
-  min-height: 100vh;
-  padding: 6% 10%;
-  font-family: "Quicksand", sans-serif;
-  box-sizing: border-box;
-
-  @media (max-width: 900px) {
-    padding: 10% 6%;
-  }
-`;
-
-const SectionTitle = styled(motion.h1)`
-  color: #008080;
-  font-family: "Poppins", sans-serif;
-  font-size: 2.8rem;
-  margin-bottom: 15px;
-`;
-
-const SectionSubtitle = styled(motion.p)`
-  color: #333;
-  font-size: 1.1rem;
+const Header = styled.div`
   margin-bottom: 50px;
-  max-width: 700px;
+  opacity: ${({ $v }) => $v ? 1 : 0};
+  transform: translateY(${({ $v }) => $v ? 0 : '30px'});
+  transition: all 0.8s ease;
 `;
 
-const ContactGrid = styled.div`
+const Label = styled.span`
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-primary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+`;
+
+const Title = styled.h2`
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 10px 0 15px;
+  @media (max-width: 768px) { font-size: 2rem; }
+`;
+
+const Subtitle = styled.p`
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.7;
+`;
+
+const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
-  gap: 40px;
-  align-items: center;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 50px;
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 `;
 
-const ContactInfo = styled(motion.div)`
+const InfoCol = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 20px;
 `;
 
-const InfoItem = styled.div`
+const InfoCard = styled.div`
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  background: white;
-  border-radius: 15px;
-  padding: 18px 20px;
-  box-shadow: 0 8px 25px rgba(0, 128, 128, 0.1);
+  gap: 20px;
   transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 15px 30px rgba(0, 128, 128, 0.2);
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
   }
 
   img {
-    width: 35px;
-    height: 35px;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-
-    h4 {
-      font-size: 1rem;
-      color: #008080;
-      margin: 0;
-    }
-
-    p {
-      color: #333;
-      margin: 0;
-      font-size: 0.95rem;
-    }
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(0.8);
   }
 `;
 
-const ContactForm = styled(motion.form)`
+const InfoDetails = styled.div`
+  h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+`;
+
+const Form = styled.form`
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  background: white;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 8px 30px rgba(0, 128, 128, 0.1);
-  animation: ${fadeIn} 0.8s ease forwards;
+  gap: 20px;
+  position: relative;
 
-  input,
-  textarea {
-    font-family: "Quicksand", sans-serif;
-    border: none;
+  @media (max-width: 500px) { padding: 24px; }
+`;
+
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+const InputLabel = styled.label`
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+`;
+
+const Input = styled.input`
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+
+  &:focus {
     outline: none;
-    padding: 14px 18px;
-    border-radius: 10px;
-    background-color: #f7f9fa;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    resize: none;
-
-    &:focus {
-      background-color: #ffffff;
-      box-shadow: 0 0 0 2px #00bfbf;
-    }
-  }
-
-  textarea {
-    min-height: 120px;
-  }
-
-  button {
-    align-self: flex-start;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(90deg, #008080, #00a6a6);
-    border: none;
-    color: white;
-    padding: 14px 25px;
-    border-radius: 50px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Poppins", sans-serif;
-    min-width: 160px;
-    justify-content: center;
-
-    img {
-      width: 20px;
-      height: 20px;
-    }
-
-    &:hover {
-      animation: ${pulse} 0.6s ease infinite;
-      background: linear-gradient(90deg, #00a6a6, #008080);
-    }
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
   }
 `;
 
-const SuccessMessage = styled(motion.div)`
-  color: #008080;
-  font-weight: bold;
+const TextArea = styled.textarea`
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  min-height: 150px;
+  resize: vertical;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.15);
+  }
+`;
+
+const Button = styled.button`
+  background: linear-gradient(135deg, var(--accent-primary), #4f46e5);
+  color: #0a0e17;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 30px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+const Status = styled.div`
   margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: ${({ $success }) => $success ? '#22c55e' : '#ef4444'};
 `;
 
-const ErrorMessage = styled(motion.div)`
-  color: red;
-  font-weight: bold;
-  margin-top: 10px;
-`;
-
-const Loader = styled.div`
-  border: 3px solid #e0f7f7;
-  border-top: 3px solid #008080;
-  border-radius: 50%;
-  width: 22px;
-  height: 22px;
-  animation: ${spin} 1s linear infinite;
-`;
-
-// --- Component ---
-const Contact = () => {
+export default function Contact() {
+  const [headerRef, headerV] = useInView();
   const formRef = useRef();
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  const [status, setStatus] = useState({ type: '', msg: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    setSuccess(false);
-    setError(false);
+    setStatus({ type: '', msg: '' });
 
     const form = formRef.current;
     const name = form.from_name.value.trim();
@@ -208,130 +207,96 @@ const Contact = () => {
     const message = form.message.value.trim();
 
     if (!name || !email || !message) {
-      setError(true);
+      setStatus({ type: 'error', msg: 'Veuillez remplir tous les champs.' });
       setLoading(false);
       return;
     }
 
-    const signedMessage = `
-      ${message}
-
-      ------------------------------
-      👤 ${name}
-      📧 ${email}
-      ------------------------------
-    `;
-    form.message.value = signedMessage;
-
     emailjs
       .sendForm(
-        "service_2f0t0gp",
-        "template_4dxnzka",
+        'service_2f0t0gp',
+        'template_4dxnzka',
         form,
-        "eJUU_ODe3Re7ujzWD"
+        'eJUU_ODe3Re7ujzWD'
       )
       .then(
         () => {
-          setSuccess(true);
+          setStatus({ type: 'success', msg: 'Message envoyé avec succès !' });
           form.reset();
-          setTimeout(() => setSuccess(false), 4000);
         },
         (err) => {
-          console.error("Erreur EmailJS:", err);
-          setError(true);
+          console.error('EmailJS Error:', err);
+          setStatus({ type: 'error', msg: 'Une erreur est survenue. Veuillez réessayer.' });
         }
       )
       .finally(() => setLoading(false));
   };
 
   return (
-    <ContactContainer>
-      <SectionTitle
-        initial={{ opacity: 0, y: -30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
-      >
-        Contact
-      </SectionTitle>
+    <Section id="contact">
+      <Header ref={headerRef} $v={headerV}>
+        <Label>{"// Contact"}</Label>
+        <Title>Discutons de votre projet</Title>
+        <Subtitle>
+          Une question, une collaboration ou un projet d'infrastructure à sécuriser ? N'hésitez pas à me contacter.
+        </Subtitle>
+      </Header>
 
-      <SectionSubtitle
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        Une question, une collaboration ou un projet à me confier ?  
-        N’hésitez pas à m’envoyer un message — je vous répondrai rapidement.
-      </SectionSubtitle>
-
-      <ContactGrid>
-        <ContactInfo
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <InfoItem>
-            <img src={MailIcon} alt="email" />
-            <div>
+      <Grid>
+        <InfoCol>
+          <InfoCard>
+            <img src={MailIcon} alt="Email" />
+            <InfoDetails>
               <h4>Email</h4>
               <p>contact@innovasec.io</p>
-            </div>
-          </InfoItem>
+            </InfoDetails>
+          </InfoCard>
 
-          <InfoItem>
-            <img src={PhoneIcon} alt="phone" />
-            <div>
+          <InfoCard>
+            <img src={PhoneIcon} alt="Téléphone" />
+            <InfoDetails>
               <h4>Téléphone</h4>
               <p>+261 38 90 016 79</p>
-            </div>
-          </InfoItem>
+            </InfoDetails>
+          </InfoCard>
 
-          <InfoItem>
-            <img src={LocationIcon} alt="location" />
-            <div>
+          <InfoCard>
+            <img src={LocationIcon} alt="Localisation" />
+            <InfoDetails>
               <h4>Localisation</h4>
               <p>Antananarivo, Madagascar</p>
-            </div>
-          </InfoItem>
-        </ContactInfo>
+            </InfoDetails>
+          </InfoCard>
+        </InfoCol>
 
-        <ContactForm
-          ref={formRef}
-          onSubmit={handleSubmit}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-        >
-          <input type="text" name="from_name" placeholder="Votre nom" required />
-          <input type="email" name="from_email" placeholder="Votre adresse email" required />
-          <textarea name="message" placeholder="Votre message" required />
+        <Form ref={formRef} onSubmit={handleSubmit}>
+          <FormGroup>
+            <InputLabel htmlFor="from_name">Votre nom</InputLabel>
+            <Input id="from_name" type="text" name="from_name" placeholder="John Doe" required />
+          </FormGroup>
 
-          <button type="submit" disabled={loading}>
-            {loading ? <Loader /> : (<><img src={SendIcon} alt="send" /> Envoyer</>)}
-          </button>
+          <FormGroup>
+            <InputLabel htmlFor="from_email">Adresse email</InputLabel>
+            <Input id="from_email" type="email" name="from_email" placeholder="john@example.com" required />
+          </FormGroup>
 
-          {success && (
-            <SuccessMessage
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              ✅ Message envoyé avec succès !
-            </SuccessMessage>
+          <FormGroup>
+            <InputLabel htmlFor="message">Message</InputLabel>
+            <TextArea id="message" name="message" placeholder="Votre message..." required />
+          </FormGroup>
+
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Envoi en cours...' : 'Envoyer le message'}
+          </Button>
+
+          {status.msg && (
+            <Status $success={status.type === 'success'}>
+              {status.type === 'success' ? '✓ ' : '✗ '}
+              {status.msg}
+            </Status>
           )}
-
-          {error && (
-            <ErrorMessage
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              ❌ Veuillez remplir tous les champs ou réessayez plus tard.
-            </ErrorMessage>
-          )}
-        </ContactForm>
-      </ContactGrid>
-    </ContactContainer>
+        </Form>
+      </Grid>
+    </Section>
   );
-};
-
-export default Contact;
+}
