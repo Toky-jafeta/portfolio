@@ -178,6 +178,7 @@ function renderColored(text) {
     green: '#7ee787', cyan: '#79c0ff', yellow: '#e3b341',
     red: '#ff7b72', purple: '#d2a8ff', dim: '#6e7681',
   };
+  // eslint-disable-next-line no-control-regex
   const parts = text.split(/\u001b\[(\w+)\](.*?)\u001b\[\/\]/gs);
   const result = [];
   for (let i = 0; i < parts.length; i++) {
