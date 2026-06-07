@@ -138,9 +138,9 @@ const Prompt = styled.div`
 `;
 
 const PromptUser = styled.span`color: #7ee787;font-family:var(--font-mono);font-size:0.82rem;`;
-const PromptAt   = styled.span`color: #8b949e;font-family:var(--font-mono);font-size:0.82rem;`;
-const PromptDir  = styled.span`color: #79c0ff;font-family:var(--font-mono);font-size:0.82rem;`;
-const PromptSym  = styled.span`color: #6366f1;font-family:var(--font-mono);font-size:0.82rem;`;
+const PromptAt = styled.span`color: #8b949e;font-family:var(--font-mono);font-size:0.82rem;`;
+const PromptDir = styled.span`color: #79c0ff;font-family:var(--font-mono);font-size:0.82rem;`;
+const PromptSym = styled.span`color: #6366f1;font-family:var(--font-mono);font-size:0.82rem;`;
 
 const Input = styled.input`
   flex: 1;
@@ -165,12 +165,12 @@ const Cursor = styled.span`
 /* ── Color helpers ── */
 const ESC = '\u001b';
 const c = {
-  green:  s => `${ESC}[green]${s}${ESC}[/]`,
-  cyan:   s => `${ESC}[cyan]${s}${ESC}[/]`,
+  green: s => `${ESC}[green]${s}${ESC}[/]`,
+  cyan: s => `${ESC}[cyan]${s}${ESC}[/]`,
   yellow: s => `${ESC}[yellow]${s}${ESC}[/]`,
-  red:    s => `${ESC}[red]${s}${ESC}[/]`,
+  red: s => `${ESC}[red]${s}${ESC}[/]`,
   purple: s => `${ESC}[purple]${s}${ESC}[/]`,
-  dim:    s => `${ESC}[dim]${s}${ESC}[/]`,
+  dim: s => `${ESC}[dim]${s}${ESC}[/]`,
 };
 
 function renderColored(text) {
@@ -179,8 +179,9 @@ function renderColored(text) {
     red: '#ff7b72', purple: '#d2a8ff', dim: '#6e7681',
   };
   // eslint-disable-next-line no-control-regex
-  const parts = text.split(/\u001b\[(\w+)\](.*?)\u001b\[\/\]/gs);
-  const result = [];
+  const parts = text.split(
+    new RegExp('\\u001b\\[(\\w+)\\](.*?)\\u001b\\[\\/\\]', 'gs')
+  ); const result = [];
   for (let i = 0; i < parts.length; i++) {
     if (i % 3 === 0) {
       result.push(<span key={i}>{parts[i]}</span>);
@@ -340,7 +341,7 @@ const COMMANDS = {
       '',
       c.yellow('PING toky.rasolomanitra.mg: 56 octets de données'),
       ...times.map((t, i) =>
-        `64 bytes from toky: icmp_seq=${i+1} ttl=64 time=${c.green(t)}`
+        `64 bytes from toky: icmp_seq=${i + 1} ttl=64 time=${c.green(t)}`
       ),
       '',
       c.yellow('--- Statistiques ---'),
@@ -543,9 +544,9 @@ export default function TerminalWidget() {
     const onMove = (ev) => {
       if (!dragRef.current.dragging) return;
       windowRef.current.style.left = (ev.clientX - dragRef.current.ox) + 'px';
-      windowRef.current.style.top  = (ev.clientY - dragRef.current.oy) + 'px';
+      windowRef.current.style.top = (ev.clientY - dragRef.current.oy) + 'px';
       windowRef.current.style.bottom = 'auto';
-      windowRef.current.style.right  = 'auto';
+      windowRef.current.style.right = 'auto';
     };
     const onUp = () => { dragRef.current.dragging = false; };
     document.addEventListener('mousemove', onMove);
@@ -577,8 +578,8 @@ export default function TerminalWidget() {
 
           <TitleBar onMouseDown={onMouseDown}>
             <Dot $c="#ff5f57" onClick={() => setOpen(false)} title="Fermer" />
-            <Dot $c="#febc2e" onClick={() => {}} title="Réduire" />
-            <Dot $c="#28c840" onClick={() => {}} title="Agrandir" />
+            <Dot $c="#febc2e" onClick={() => { }} title="Réduire" />
+            <Dot $c="#28c840" onClick={() => { }} title="Agrandir" />
             <TitleText>toky@portfolio:~</TitleText>
           </TitleBar>
 
