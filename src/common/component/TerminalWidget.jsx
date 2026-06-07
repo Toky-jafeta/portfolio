@@ -1,3 +1,4 @@
+/* eslint-disable no-control-regex */
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled, { keyframes } from 'styled-components';
 
