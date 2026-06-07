@@ -164,7 +164,7 @@ const Cursor = styled.span`
 `;
 
 /* ── Color helpers ── */
-const ESC = '\u001b';
+const ESC = String.fromCharCode(27);
 const c = {
   green: s => `${ESC}[green]${s}${ESC}[/]`,
   cyan: s => `${ESC}[cyan]${s}${ESC}[/]`,
@@ -181,8 +181,9 @@ function renderColored(text) {
   };
   // eslint-disable-next-line no-control-regex
   const parts = text.split(
-    new RegExp('\\u001b\\[(\\w+)\\](.*?)\\u001b\\[\\/\\]', 'gs')
-  ); const result = [];
+    new RegExp('\\x1b\\[(\\w+)\\](.*?)\\x1b\\[\\/\\]', 'gs')
+  );
+  const result = [];
   for (let i = 0; i < parts.length; i++) {
     if (i % 3 === 0) {
       result.push(<span key={i}>{parts[i]}</span>);
