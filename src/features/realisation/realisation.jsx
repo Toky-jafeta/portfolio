@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from '../../common/hooks/useInView';
 import realisationsData from '../../datas/realisationsData';
 
@@ -182,10 +183,147 @@ const TaskItem = styled.li`
   }
 `;
 
+const DetailBtn = styled.button`
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 15px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    transform: translateY(-2px);
+  }
+`;
+
+const ModalOverlay = styled(motion.div)`
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 23, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const ModalContent = styled(motion.div)`
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  max-width: 700px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  box-shadow: var(--shadow-accent);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+
+  @media (max-width: 500px) {
+    padding: 25px 20px;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--accent-primary);
+  }
+`;
+
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 15px;
+  gap: 15px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+`;
+
+const ModalClient = styled.h3`
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+`;
+
+const ModalPeriod = styled.span`
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+`;
+
+const ModalBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+const ModalSection = styled.div`
+  h4 {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+`;
+
 export default function Realisations() {
   const [headerRef, headerV] = useInView();
   const [tabsRef, tabsV] = useInView();
   const [activeFilter, setActiveFilter] = useState('All');
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Dynamically group filters based on domain/keywords
   const getFilterCategory = (domaine) => {
@@ -195,10 +333,12 @@ export default function Realisations() {
     return 'Projet';
   };
 
-  const filteredData = realisationsData.filter(item => {
-    if (activeFilter === 'All') return true;
-    return getFilterCategory(item.domaine) === activeFilter;
-  });
+  const filteredData = realisationsData
+    .filter(item => {
+      if (activeFilter === 'All') return true;
+      return getFilterCategory(item.domaine) === activeFilter;
+    })
+    .sort((a, b) => b.id - a.id);
 
   return (
     <Section id="realisations">
@@ -230,14 +370,56 @@ export default function Realisations() {
               </BadgeContainer>
               <Description>{item.description}</Description>
             </div>
-            <TaskList>
-              {item.taches.map((tache, index) => (
-                <TaskItem key={index}>{tache}</TaskItem>
-              ))}
-            </TaskList>
+            
+            <DetailBtn onClick={() => setSelectedProject(item)}>
+              Détails du projet →
+            </DetailBtn>
           </Card>
         ))}
       </Grid>
+
+      <AnimatePresence>
+        {selectedProject && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedProject(null)}
+          >
+            <ModalContent
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <CloseButton onClick={() => setSelectedProject(null)}>&times;</CloseButton>
+              <ModalHeader>
+                <ModalClient>{selectedProject.client}</ModalClient>
+                <ModalPeriod>{selectedProject.periode}</ModalPeriod>
+              </ModalHeader>
+              <BadgeContainer>
+                <DomainBadge>{selectedProject.domaine}</DomainBadge>
+                <RoleBadge>{selectedProject.role}</RoleBadge>
+              </BadgeContainer>
+              <ModalBody>
+                <ModalSection>
+                  <h4>Description</h4>
+                  <p>{selectedProject.description}</p>
+                </ModalSection>
+                <ModalSection>
+                  <h4>Tâches clés réalisées</h4>
+                  <TaskList style={{ marginTop: '10px' }}>
+                    {selectedProject.taches.map((tache, index) => (
+                      <TaskItem key={index}>{tache}</TaskItem>
+                    ))}
+                  </TaskList>
+                </ModalSection>
+              </ModalBody>
+            </ModalContent>
+          </ModalOverlay>
+        )}
+      </AnimatePresence>
     </Section>
   );
 }

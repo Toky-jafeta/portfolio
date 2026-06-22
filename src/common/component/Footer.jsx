@@ -106,9 +106,7 @@ export default function Footer() {
         </Nav>
       </TopRow>
       <BottomRow>
-        <Copyright>© {currentYear} Toky Rasolomanitra. Tous droits réservés.</Copyright>
-        <Credit>Built with React & <span>styled-components</span></Credit>
-        <BackToTop onClick={handleBackToTop} aria-label="Retour en haut">
+        <Copyright>© {currentYear} Toky Rasolomanitra. Tous droits réservés.</Copyright>        <BackToTop onClick={handleBackToTop} aria-label="Retour en haut">
           ↑
         </BackToTop>
       </BottomRow>

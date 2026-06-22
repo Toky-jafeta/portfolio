@@ -1,3 +1,5 @@
-# https://www.robotstxt.org/robotstxt.html
+# Robots.txt — jafeta.pages.dev
 User-agent: *
-Disallow:
+Allow: /
+
+Sitemap: https://jafeta.pages.dev/sitemap.xml
