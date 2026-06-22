@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const FooterContainer = styled.footer`
@@ -53,13 +52,6 @@ const BottomRow = styled.div`
 const Copyright = styled.span`
   font-size: 0.8rem;
   color: var(--text-muted);
-`;
-
-const Credit = styled.span`
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  span { color: var(--accent-primary); }
 `;
 
 const BackToTop = styled.button`
