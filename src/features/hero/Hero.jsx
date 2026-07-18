@@ -300,12 +300,12 @@ const PhotoImg = styled.img`
   object-position: top center;
   -webkit-mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
   mask-image: linear-gradient(to bottom, black 65%, transparent 98%);
-  filter: brightness(1.03) contrast(1.05) drop-shadow(0 0 20px rgba(99, 102, 241, 0.18));
+  filter: brightness(1.03) contrast(1.05);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 
   &:hover {
     transform: scale(1.02);
-    filter: brightness(1.06) contrast(1.08) drop-shadow(0 0 30px rgba(99, 102, 241, 0.32)) drop-shadow(0 0 50px rgba(168, 85, 247, 0.15));
+    filter: brightness(1.06) contrast(1.08);
   }
 `;
 

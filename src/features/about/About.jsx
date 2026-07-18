@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from '../../common/hooks/useInView';
 import LinkedinLogo from '../../assets/logo/linkedin.png';
 import gitLogo from '../../assets/logo/git.png';
-import ResumPDF from '../../assets/cv/Cv_Rasolomanitra.pdf';
 import DownloadLogo from '../../assets/logo/download.png';
+import AtsModal from './AtsModal';
 
 const Section = styled.section`
   padding: 100px 8%;
@@ -61,7 +62,7 @@ const SocialLinks = styled.div`
   margin-top: 20px;
   flex-wrap: wrap;
 
-  a {
+  a, button {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -72,6 +73,8 @@ const SocialLinks = styled.div`
     font-size: 0.85rem;
     font-weight: 500;
     transition: all 0.3s ease;
+    background: transparent;
+    cursor: pointer;
 
     img { width: 18px; height: 18px; filter: brightness(0) invert(0.7); }
 
@@ -153,6 +156,7 @@ const pillars = [
 export default function About() {
   const [headerRef, headerVisible] = useInView();
   const [gridRef, gridVisible] = useInView();
+  const [showAtsModal, setShowAtsModal] = useState(false);
 
   return (
     <Section id="apropos">
@@ -173,11 +177,13 @@ export default function About() {
           <a href="https://github.com/Toky-jafeta" target="_blank" rel="noopener noreferrer">
             <img src={gitLogo} alt="GitHub" /> GitHub
           </a>
-          <a href={ResumPDF} download>
-            <img src={DownloadLogo} alt="CV" /> Télécharger mon CV
-          </a>
+          <button onClick={() => setShowAtsModal(true)}>
+            <img src={DownloadLogo} alt="CV" /> Generate ATS Resume
+          </button>
         </SocialLinks>
       </Header>
+
+      {showAtsModal && <AtsModal onClose={() => setShowAtsModal(false)} />}
 
       <PillarsGrid ref={gridRef}>
         {pillars.map((p, i) => (

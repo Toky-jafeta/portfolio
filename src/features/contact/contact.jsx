@@ -248,7 +248,7 @@ export default function Contact() {
             <img src={MailIcon} alt="Email" />
             <InfoDetails>
               <h4>Email</h4>
-              <p>contact@innovasec.io</p>
+              <p>trasolomanitra@gmail.com</p>
             </InfoDetails>
           </InfoCard>
 

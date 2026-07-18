@@ -280,7 +280,7 @@ const COMMANDS = {
     '',
     c.green('# contact.txt — Toky Rasolomanitra'),
     '',
-    c.yellow('Email:') + '      contact@innovasec.io',
+    c.yellow('Email:') + '      trasolomanitra@gmail.com',
     c.yellow('Phone:') + '      +261 38 90 016 79',
     c.yellow('Location:') + '   Antananarivo, Madagascar',
     c.yellow('LinkedIn:') + '   linkedin.com/in/toky-rasolomanitra-121896220',
