@@ -306,7 +306,7 @@ export default function Realisations() {
   };
 
   const filteredData = realisationsData
-    .filter(item => activeFilter === 'All' || getFilterCategory(item.domaine) === activeFilter)
+    .filter(item => activeFilter === 'All' || getFilterCategory(tr(item.domaine, lang)) === activeFilter)
     .sort((a, b) => b.id - a.id);
 
   return (

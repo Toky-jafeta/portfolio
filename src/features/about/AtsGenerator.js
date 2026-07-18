@@ -80,7 +80,7 @@ export async function generateAtsDocx(lang = "fr") {
 
     // ── RÉALISATIONS ─────────────────────────────────────────────────────────
     sectionHeading(t.realisations),
-    ...realisations.flatMap((r) => [
+    ...realisations.slice().reverse().flatMap((r) => [
       new Paragraph({
         children: [
           new TextRun({ text: `${r.client}`, bold: true }),
@@ -201,7 +201,7 @@ export function generateAtsPdf(lang = "fr") {
 
     // ── RÉALISATIONS ─────────────────────────────────────────────────────────
     sectionHeader(t.realisations),
-    ...realisations.flatMap((r) => [
+    ...realisations.slice().reverse().flatMap((r) => [
       {
         text: [
           { text: r.client, bold: true },

@@ -139,7 +139,7 @@ export default function AtsModal({ onClose }) {
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'PROFIL PROFESSIONNEL' : 'PROFESSIONAL SUMMARY'}</h3>
               <p style={{margin: '0 0 10px'}}>{atsResumeData.personalInfo.summary[lang]}</p>
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'DERNIÈRES RÉALISATIONS' : 'LATEST ACHIEVEMENTS'}</h3>
-              {atsResumeData.realisations.slice(0, 3).map((r, i) => (
+              {atsResumeData.realisations.slice().reverse().slice(0, 3).map((r, i) => (
                 <div key={i} style={{marginBottom: '8px'}}>
                   <strong>{r.client}</strong> | {r.role[lang]} | {r.periode}
                   <p style={{margin: '2px 0', fontStyle:'italic', fontSize:'0.8rem'}}>{r.domaine[lang]}</p>
