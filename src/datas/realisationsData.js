@@ -165,6 +165,114 @@ const realisationsData = [
       ]
     }
   },
+  {
+    id: 6,
+    periode: "Mai 2026- Présent",
+    client: "Yas Madagascar",
+    domaine: {
+      fr: "Infrastructure Réseau",
+      en: "Network Infrastructure"
+    },
+    role: {
+      fr: "Chef de Projet / Ingénieur Système, Réseau et Sécurité",
+      en: "Project Manager / System, Network & Security Engineer"
+    },
+    description: {
+      fr: "Projet de modernisation de l'infrastructure WAN de Yas Madagascar consistant au remplacement de quatre routeurs ISN répartis sur deux sites stratégiques. L'architecture a été conçue pour assurer une haute disponibilité grâce à des liaisons redondantes MPLS et Dark Fiber, garantissant la continuité des services et la résilience du réseau.",
+      en: "WAN infrastructure modernization project for Yas Madagascar involving the replacement of four ISN routers across two strategic sites. The architecture was designed to provide high availability through redundant MPLS and Dark Fiber links, ensuring business continuity and network resilience."
+    },
+    taches: {
+      fr: [
+        "Audit et analyse de l'architecture WAN existante",
+        "Collecte et sauvegarde des configurations des quatre routeurs de production",
+        "Conception de l'architecture cible avec redondance inter-sites",
+        "Préparation et configuration de quatre nouveaux routeurs ISN",
+        "Déploiement de deux routeurs sur chacun des deux sites",
+        "Configuration des liaisons MPLS et Dark Fiber pour assurer la haute disponibilité",
+        "Migration des configurations réseau, des interfaces et des protocoles de routage",
+        "Configuration des routes statiques, dynamiques et des mécanismes de basculement",
+        "Validation des communications inter-sites et des flux critiques",
+        "Tests de redondance, de basculement (Failover) et de reprise des services",
+        "Coordination de la fenêtre de maintenance avec les équipes d'exploitation",
+        "Exécution de la migration en production avec interruption minimale des services",
+        "Supervision et optimisation des performances après migration",
+        "Documentation complète de la nouvelle architecture réseau",
+        "Transfert de compétences et accompagnement des équipes techniques"
+      ],
+      en: [
+        "Audit and assessment of the existing WAN infrastructure",
+        "Collection and backup of configurations from the four production routers",
+        "Design of the target redundant inter-site architecture",
+        "Preparation and configuration of four new ISN routers",
+        "Deployment of two routers at each of the two sites",
+        "Configuration of redundant MPLS and Dark Fiber links for high availability",
+        "Migration of network configurations, interfaces, and routing protocols",
+        "Configuration of static and dynamic routing with failover mechanisms",
+        "Validation of inter-site connectivity and critical application traffic",
+        "High availability, failover, and service recovery testing",
+        "Coordination of the maintenance window with operations teams",
+        "Production migration with minimal service interruption",
+        "Post-migration monitoring and network performance optimization",
+        "Comprehensive technical documentation of the new network architecture",
+        "Knowledge transfer and technical team enablement"
+      ]
+    }
+  },
+  {
+    id: 7,
+    periode: "Mai 2026 - Présent",
+    client: "Banque Centrale de Madagascar (BCM)",
+    domaine: {
+      fr: "Infrastructure & Cybersécurité",
+      en: "Infrastructure & Cybersecurity"
+    },
+    role: {
+      fr: "Chef de Projet / Ingénieur Système, Réseau et Sécurité",
+      en: "Project Manager / System, Network & Security Engineer"
+    },
+    description: {
+      fr: "Projet de modernisation de l'infrastructure de sécurité de la Banque Centrale de Madagascar consistant au remplacement des pare-feu Cisco ASA et Cisco Firepower par une architecture Check Point Haute Disponibilité, avec la mise en place d'une plateforme centralisée de gestion et de supervision des événements de sécurité.",
+      en: "Security infrastructure modernization project for the Central Bank of Madagascar involving the replacement of Cisco ASA and Cisco Firepower firewalls with a High Availability Check Point architecture, including the deployment of centralized management and security event monitoring platforms."
+    },
+    taches: {
+      fr: [
+        "Audit et analyse de l'infrastructure de sécurité existante",
+        "Collecte et analyse des configurations Cisco ASA et Cisco Firepower",
+        "Conception de l'architecture cible basée sur Check Point",
+        "Migration des règles de filtrage, objets réseau, NAT et politiques de sécurité vers Check Point",
+        "Déploiement et configuration des passerelles de sécurité Check Point",
+        "Mise en place d'un cluster Check Point en Haute Disponibilité (HA)",
+        "Installation et configuration du serveur Check Point Security Management",
+        "Déploiement et intégration du serveur SmartEvent pour la gestion et la corrélation des événements de sécurité",
+        "Configuration des interfaces réseau, du routage et des politiques d'accès",
+        "Validation des flux applicatifs et des communications critiques",
+        "Réalisation des tests de migration (Network Acceptance Testing - NAT)",
+        "Planification et coordination des opérations de migration avec les équipes clientes",
+        "Exécution de la migration en production avec minimisation des interruptions de service",
+        "Validation post-migration et résolution des incidents éventuels",
+        "Documentation technique complète de la nouvelle architecture",
+        "Transfert de compétences et accompagnement des équipes d'exploitation"
+      ],
+      en: [
+        "Audit and analysis of the existing security infrastructure",
+        "Collection and analysis of Cisco ASA and Cisco Firepower configurations",
+        "Design of the target Check Point security architecture",
+        "Migration of firewall rules, network objects, NAT, and security policies to Check Point",
+        "Deployment and configuration of Check Point Security Gateways",
+        "Implementation of a High Availability (HA) Check Point cluster",
+        "Installation and configuration of the Check Point Security Management Server",
+        "Deployment and integration of the SmartEvent server for security event management and correlation",
+        "Configuration of network interfaces, routing, and security policies",
+        "Validation of application flows and critical communications",
+        "Execution of Network Acceptance Testing (NAT)",
+        "Migration planning and coordination with customer technical teams",
+        "Production migration execution with minimal service disruption",
+        "Post-migration validation and incident resolution",
+        "Complete technical documentation of the new architecture",
+        "Knowledge transfer and operational team enablement"
+      ]
+    }
+  },
 ];
 
 export default realisationsData;
