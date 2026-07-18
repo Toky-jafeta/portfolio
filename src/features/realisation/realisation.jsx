@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from '../../common/hooks/useInView';
+import { useLang } from '../../common/context/LanguageContext';
+import { t, tr } from '../../i18n/translations';
 import realisationsData from '../../datas/realisationsData';
 
 const Section = styled.section`
@@ -52,7 +54,7 @@ const FilterTabs = styled.div`
 `;
 
 const FilterButton = styled.button`
-  background: ${({ $active }) => $active ? 'rgba(99, 102, 241, 0.1)' : 'transparent'};
+  background: ${({ $active }) => $active ? 'rgba(99,102,241,0.1)' : 'transparent'};
   color: ${({ $active }) => $active ? 'var(--accent-primary)' : 'var(--text-secondary)'};
   border: 1px solid ${({ $active }) => $active ? 'var(--accent-primary)' : 'var(--border)'};
   padding: 8px 20px;
@@ -62,11 +64,7 @@ const FilterButton = styled.button`
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.3s ease;
-
-  &:hover {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-  }
+  &:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
 `;
 
 const Grid = styled.div`
@@ -93,10 +91,8 @@ const Card = styled.div`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    height: 100%;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
     background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary));
   }
 
@@ -137,21 +133,21 @@ const BadgeContainer = styled.div`
 const DomainBadge = styled.span`
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(59,130,246,0.1);
   color: var(--accent-secondary);
   padding: 4px 10px;
   border-radius: 50px;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59,130,246,0.2);
 `;
 
 const RoleBadge = styled.span`
   font-size: 0.75rem;
   font-weight: 600;
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(99,102,241,0.1);
   color: var(--accent-primary);
   padding: 4px 10px;
   border-radius: 50px;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  border: 1px solid rgba(99,102,241,0.2);
 `;
 
 const Description = styled.p`
@@ -173,7 +169,6 @@ const TaskItem = styled.li`
   line-height: 1.4;
   padding-left: 18px;
   position: relative;
-
   &::before {
     content: '→';
     position: absolute;
@@ -199,18 +194,13 @@ const DetailBtn = styled.button`
   align-items: center;
   gap: 8px;
   transition: all 0.3s ease;
-
-  &:hover {
-    border-color: var(--accent-primary);
-    color: var(--accent-primary);
-    transform: translateY(-2px);
-  }
+  &:hover { border-color: var(--accent-primary); color: var(--accent-primary); transform: translateY(-2px); }
 `;
 
 const ModalOverlay = styled(motion.div)`
   position: fixed;
   inset: 0;
-  background: rgba(10, 14, 23, 0.75);
+  background: color-mix(in srgb, var(--bg-primary) 75%, transparent);
   backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
@@ -234,26 +224,16 @@ const ModalContent = styled(motion.div)`
   flex-direction: column;
   gap: 24px;
 
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
-  }
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
-  @media (max-width: 500px) {
-    padding: 25px 20px;
-  }
+  @media (max-width: 500px) { padding: 25px 20px; }
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 20px; right: 20px;
   background: transparent;
   border: none;
   color: var(--text-secondary);
@@ -261,10 +241,7 @@ const CloseButton = styled.button`
   cursor: pointer;
   line-height: 1;
   transition: color 0.2s ease;
-
-  &:hover {
-    color: var(--accent-primary);
-  }
+  &:hover { color: var(--accent-primary); }
 `;
 
 const ModalHeader = styled.div`
@@ -274,12 +251,7 @@ const ModalHeader = styled.div`
   border-bottom: 1px solid var(--border);
   padding-bottom: 15px;
   gap: 15px;
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
+  @media (max-width: 500px) { flex-direction: column; align-items: flex-start; gap: 8px; }
 `;
 
 const ModalClient = styled.h3`
@@ -320,40 +292,41 @@ const ModalSection = styled.div`
 `;
 
 export default function Realisations() {
+  const { lang } = useLang();
   const [headerRef, headerV] = useInView();
   const [tabsRef, tabsV] = useInView();
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Dynamically group filters based on domain/keywords
   const getFilterCategory = (domaine) => {
     const d = domaine.toLowerCase();
-    if (d.includes('firewall') || d.includes('security') || d.includes('cyber')) return 'Securite';
-    if (d.includes('switch') || d.includes('network') || d.includes('routing')) return 'Reseau';
+    if (d.includes('firewall') || d.includes('security') || d.includes('cyber') || d.includes('sécurité')) return 'Securite';
+    if (d.includes('switch') || d.includes('network') || d.includes('routing') || d.includes('réseau')) return 'Reseau';
     return 'Projet';
   };
 
   const filteredData = realisationsData
-    .filter(item => {
-      if (activeFilter === 'All') return true;
-      return getFilterCategory(item.domaine) === activeFilter;
-    })
+    .filter(item => activeFilter === 'All' || getFilterCategory(item.domaine) === activeFilter)
     .sort((a, b) => b.id - a.id);
 
   return (
     <Section id="realisations">
       <Header ref={headerRef} $v={headerV}>
-        <Label>{"// Portfolio"}</Label>
-        <Title>Réalisations marquantes</Title>
-        <Subtitle>
-          Découvrez mes récents projets de migration, sécurisation d'infrastructure et pilotage chez des grands comptes.
-        </Subtitle>
+        <Label>{tr(t.realisations.label, lang)}</Label>
+        <Title>{tr(t.realisations.title, lang)}</Title>
+        <Subtitle>{tr(t.realisations.subtitle, lang)}</Subtitle>
       </Header>
 
       <FilterTabs ref={tabsRef} $v={tabsV}>
-        <FilterButton $active={activeFilter === 'All'} onClick={() => setActiveFilter('All')}>Tous les projets</FilterButton>
-        <FilterButton $active={activeFilter === 'Reseau'} onClick={() => setActiveFilter('Reseau')}>Réseau & Routage</FilterButton>
-        <FilterButton $active={activeFilter === 'Securite'} onClick={() => setActiveFilter('Securite')}>Sécurité & Firewalling</FilterButton>
+        <FilterButton $active={activeFilter === 'All'} onClick={() => setActiveFilter('All')}>
+          {tr(t.realisations.filterAll, lang)}
+        </FilterButton>
+        <FilterButton $active={activeFilter === 'Reseau'} onClick={() => setActiveFilter('Reseau')}>
+          {tr(t.realisations.filterNet, lang)}
+        </FilterButton>
+        <FilterButton $active={activeFilter === 'Securite'} onClick={() => setActiveFilter('Securite')}>
+          {tr(t.realisations.filterSec, lang)}
+        </FilterButton>
       </FilterTabs>
 
       <Grid $v={tabsV}>
@@ -365,14 +338,13 @@ export default function Realisations() {
                 <Periode>{item.periode}</Periode>
               </CardHeader>
               <BadgeContainer>
-                <DomainBadge>{item.domaine}</DomainBadge>
-                <RoleBadge>{item.role}</RoleBadge>
+                <DomainBadge>{tr(item.domaine, lang)}</DomainBadge>
+                <RoleBadge>{tr(item.role, lang)}</RoleBadge>
               </BadgeContainer>
-              <Description>{item.description}</Description>
+              <Description>{tr(item.description, lang)}</Description>
             </div>
-            
             <DetailBtn onClick={() => setSelectedProject(item)}>
-              Détails du projet →
+              {tr(t.realisations.details, lang)}
             </DetailBtn>
           </Card>
         ))}
@@ -381,9 +353,7 @@ export default function Realisations() {
       <AnimatePresence>
         {selectedProject && (
           <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setSelectedProject(null)}
           >
             <ModalContent
@@ -399,18 +369,18 @@ export default function Realisations() {
                 <ModalPeriod>{selectedProject.periode}</ModalPeriod>
               </ModalHeader>
               <BadgeContainer>
-                <DomainBadge>{selectedProject.domaine}</DomainBadge>
-                <RoleBadge>{selectedProject.role}</RoleBadge>
+                <DomainBadge>{tr(selectedProject.domaine, lang)}</DomainBadge>
+                <RoleBadge>{tr(selectedProject.role, lang)}</RoleBadge>
               </BadgeContainer>
               <ModalBody>
                 <ModalSection>
-                  <h4>Description</h4>
-                  <p>{selectedProject.description}</p>
+                  <h4>{tr(t.realisations.modalDesc, lang)}</h4>
+                  <p>{tr(selectedProject.description, lang)}</p>
                 </ModalSection>
                 <ModalSection>
-                  <h4>Tâches clés réalisées</h4>
+                  <h4>{tr(t.realisations.modalTasks, lang)}</h4>
                   <TaskList style={{ marginTop: '10px' }}>
-                    {selectedProject.taches.map((tache, index) => (
+                    {tr(selectedProject.taches, lang).map((tache, index) => (
                       <TaskItem key={index}>{tache}</TaskItem>
                     ))}
                   </TaskList>

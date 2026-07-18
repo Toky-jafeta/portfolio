@@ -1,5 +1,6 @@
 // src/datas/atsResumeData.js
 // Source unique de vérité : toutes les données sont importées depuis les fichiers existants du portfolio.
+// Chaque champ textuel est bilingue { fr, en } — le générateur utilise le paramètre lang pour choisir la langue.
 
 import realisationsData from './realisationsData';
 import { ExperienceList } from './experienceList';
@@ -27,18 +28,19 @@ export const atsResumeData = {
     portfolio: "toky-jafeta.github.io"
   },
 
-  // Réalisations issues directement de realisationsData.js
+  // Réalisations bilingues depuis realisationsData.js
   realisations: realisationsData,
 
-  // Expériences issues directement de experienceList.js
+  // Expériences bilingues depuis experienceList.js
   experience: ExperienceList,
 
-  // Compétences issues directement de competences.js
+  // Compétences bilingues depuis competences.js
   skills: CompetencesTechniques,
 
-  // Formations issues directement de formations.json
+  // Formations bilingues depuis formations.json
   education: formations,
 
-  // Certifications issues directement de certifications.json
+  // Certifications depuis certifications.json (noms officiels, pas traduits)
   certifications: certifications,
 };
+

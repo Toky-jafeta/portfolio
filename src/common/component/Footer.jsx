@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { useLang } from '../../common/context/LanguageContext';
+import { t, tr } from '../../i18n/translations';
 
 const FooterContainer = styled.footer`
   padding: 60px 8% 30px;
@@ -75,30 +77,26 @@ const BackToTop = styled.button`
 `;
 
 export default function Footer() {
-  const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
+  const { lang } = useLang();
   const currentYear = new Date().getFullYear();
 
   return (
     <FooterContainer>
       <TopRow>
-        <Logo href="#accueil">
-          Toky<span>.</span>
-        </Logo>
+        <Logo href="#accueil">Toky<span>.</span></Logo>
         <Nav>
-          <a href="#apropos">À propos</a>
-          <a href="#expertise">Expertise</a>
-          <a href="#realisations">Réalisations</a>
-          <a href="#services">Services</a>
-          <a href="#experiences">Parcours</a>
-          <a href="#certifications">Certifications</a>
-          <a href="#contact">Contact</a>
+          <a href="#apropos">{tr(t.footer.about, lang)}</a>
+          <a href="#expertise">{tr(t.nav.expertise, lang)}</a>
+          <a href="#realisations">{tr(t.footer.projects, lang)}</a>
+          <a href="#services">{tr(t.nav.services, lang)}</a>
+          <a href="#experiences">{tr(t.footer.journey, lang)}</a>
+          <a href="#certifications">{tr(t.nav.certifications, lang)}</a>
+          <a href="#contact">{tr(t.nav.contact, lang)}</a>
         </Nav>
       </TopRow>
       <BottomRow>
-        <Copyright>© {currentYear} Toky Rasolomanitra. Tous droits réservés.</Copyright>        <BackToTop onClick={handleBackToTop} aria-label="Retour en haut">
+        <Copyright>© {currentYear} Toky Rasolomanitra. {tr(t.footer.rights, lang)}</Copyright>
+        <BackToTop onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top">
           ↑
         </BackToTop>
       </BottomRow>

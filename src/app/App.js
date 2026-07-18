@@ -1,4 +1,6 @@
 import './App.css';
+import { LanguageProvider } from '../common/context/LanguageContext';
+import { ThemeProvider } from '../common/context/ThemeContext';
 import TerminalWidget from '../common/component/TerminalWidget';
 import Header from '../common/component/header';
 import ScrollProgress from '../common/component/ScrollProgress';
@@ -14,22 +16,26 @@ import Contact from '../features/contact/contact';
 
 function App() {
   return (
-    <div className="App">
-      <ScrollProgress />
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <Expertise />
-        <Realisations />
-        <Services />
-        <Experiences />
-        <Certifications />
-        <Contact />
-      </main>
-      <Footer />
-      <TerminalWidget />
-    </div>
+    <ThemeProvider>
+      <LanguageProvider>
+        <div className="App">
+          <ScrollProgress />
+          <Header />
+          <main>
+            <Hero />
+            <About />
+            <Expertise />
+            <Realisations />
+            <Services />
+            <Experiences />
+            <Certifications />
+            <Contact />
+          </main>
+          <Footer />
+          <TerminalWidget />
+        </div>
+      </LanguageProvider>
+    </ThemeProvider>
   );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useInView } from '../../common/hooks/useInView';
+import { useLang } from '../../common/context/LanguageContext';
+import { t, tr } from '../../i18n/translations';
 import LinkedinLogo from '../../assets/logo/linkedin.png';
 import gitLogo from '../../assets/logo/git.png';
 import DownloadLogo from '../../assets/logo/download.png';
@@ -14,9 +16,7 @@ const Section = styled.section`
   &::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
   }
@@ -45,7 +45,6 @@ const Title = styled.h2`
   font-weight: 700;
   color: var(--text-primary);
   margin: 10px 0 15px;
-
   @media (max-width: 768px) { font-size: 2rem; }
 `;
 
@@ -111,11 +110,7 @@ const PillarCard = styled.div`
   }
 `;
 
-const PillarIcon = styled.div`
-  font-size: 2rem;
-  margin-bottom: 15px;
-`;
-
+const PillarIcon = styled.div`font-size: 2rem; margin-bottom: 15px;`;
 const PillarTitle = styled.h3`
   font-family: var(--font-heading);
   font-size: 1.15rem;
@@ -123,37 +118,14 @@ const PillarTitle = styled.h3`
   color: var(--text-primary);
   margin-bottom: 10px;
 `;
-
 const PillarDesc = styled.p`
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.6;
 `;
 
-const pillars = [
-  {
-    icon: '🏗️',
-    title: 'Architecture & Infrastructure',
-    desc: 'Conception et déploiement d\'architectures réseau complexes : firewalls Fortinet, switches Cisco, VPN, haute disponibilité, segmentation VLAN/VRF.'
-  },
-  {
-    icon: '🛡️',
-    title: 'Cybersécurité & Pentesting',
-    desc: 'Audits de sécurité, tests d\'intrusion, bug bounty, détection de vulnérabilités. Certifié Fortinet (FCP, FCA, FCF). Actif sur RootMe et HackTheBox.'
-  },
-  {
-    icon: '⚡',
-    title: 'Développement & Automatisation',
-    desc: 'Développement Python avancé, scripting d\'automatisation, applications web React/Django, outils de monitoring et génération de rapports.'
-  },
-  {
-    icon: '📋',
-    title: 'Pilotage de Projets IT',
-    desc: 'Chef de projet sur des missions critiques : coordination d\'équipes, gestion des délais, communication client, documentation technique complète.'
-  }
-];
-
 export default function About() {
+  const { lang } = useLang();
   const [headerRef, headerVisible] = useInView();
   const [gridRef, gridVisible] = useInView();
   const [showAtsModal, setShowAtsModal] = useState(false);
@@ -161,15 +133,9 @@ export default function About() {
   return (
     <Section id="apropos">
       <Header ref={headerRef} $visible={headerVisible}>
-        <SectionLabel>{"// À propos"}</SectionLabel>
-        <Title>Ingénieur polyvalent, orienté résultats.</Title>
-        <Subtitle>
-          Basé à Antananarivo, je combine une expertise en systèmes & réseaux,
-          une passion pour la cybersécurité et un savoir-faire en développement pour
-          concevoir des solutions IT robustes et sécurisées. De l'architecture réseau
-          au pentest, du scripting Python au pilotage de projets — je couvre l'ensemble
-          de la chaîne de valeur IT.
-        </Subtitle>
+        <SectionLabel>{tr(t.about.label, lang)}</SectionLabel>
+        <Title>{tr(t.about.title, lang)}</Title>
+        <Subtitle>{tr(t.about.subtitle, lang)}</Subtitle>
         <SocialLinks>
           <a href="https://www.linkedin.com/in/toky-rasolomanitra-121896220/" target="_blank" rel="noopener noreferrer">
             <img src={LinkedinLogo} alt="LinkedIn" /> LinkedIn
@@ -178,7 +144,7 @@ export default function About() {
             <img src={gitLogo} alt="GitHub" /> GitHub
           </a>
           <button onClick={() => setShowAtsModal(true)}>
-            <img src={DownloadLogo} alt="CV" /> Generate ATS Resume
+            <img src={DownloadLogo} alt="CV" /> {tr(t.about.genCV, lang)}
           </button>
         </SocialLinks>
       </Header>
@@ -186,11 +152,11 @@ export default function About() {
       {showAtsModal && <AtsModal onClose={() => setShowAtsModal(false)} />}
 
       <PillarsGrid ref={gridRef}>
-        {pillars.map((p, i) => (
+        {t.about.pillars.map((p, i) => (
           <PillarCard key={i} $visible={gridVisible} $delay={`${i * 0.15}s`}>
             <PillarIcon>{p.icon}</PillarIcon>
-            <PillarTitle>{p.title}</PillarTitle>
-            <PillarDesc>{p.desc}</PillarDesc>
+            <PillarTitle>{tr(p.title, lang)}</PillarTitle>
+            <PillarDesc>{tr(p.desc, lang)}</PillarDesc>
           </PillarCard>
         ))}
       </PillarsGrid>

@@ -84,23 +84,14 @@ export async function generateAtsDocx(lang = "fr") {
       new Paragraph({
         children: [
           new TextRun({ text: `${r.client}`, bold: true }),
-          new TextRun({ text: `  |  ${r.role}  |  ${r.periode}` }),
+          new TextRun({ text: `  |  ${r.role[lang]}  |  ${r.periode}` }),
         ],
         spacing: { before: 160, after: 40 }
       }),
-      new Paragraph({
-        children: [new TextRun({ text: r.domaine, italics: true, size: 20 })],
-        spacing: { after: 60 }
-      }),
-      new Paragraph({
-        text: r.description,
-        spacing: { after: 60 }
-      }),
-      new Paragraph({
-        children: [new TextRun({ text: t.tasks, bold: true })],
-        spacing: { after: 40 }
-      }),
-      ...r.taches.map(tache => bullet(tache)),
+      new Paragraph({ children: [new TextRun({ text: r.domaine[lang], italics: true, size: 20 })], spacing: { after: 60 } }),
+      new Paragraph({ text: r.description[lang], spacing: { after: 60 } }),
+      new Paragraph({ children: [new TextRun({ text: t.tasks, bold: true })], spacing: { after: 40 } }),
+      ...r.taches[lang].map(tache => bullet(tache)),
     ]),
 
     // ── EXPÉRIENCE ───────────────────────────────────────────────────────────
@@ -112,35 +103,26 @@ export async function generateAtsDocx(lang = "fr") {
         new Paragraph({
           children: [
             new TextRun({ text: exp.entreprise, bold: true }),
-            new TextRun({ text: `  |  ${exp.poste}  |  ${exp.periode}` }),
+            new TextRun({ text: `  |  ${exp.poste[lang]}  |  ${exp.periode}` }),
           ],
           spacing: { before: 160, after: 40 }
         }),
-        new Paragraph({
-          children: [new TextRun({ text: exp.lieu, italics: true, size: 20 })],
-          spacing: { after: 60 }
-        }),
-        new Paragraph({
-          text: exp.description_court,
-          spacing: { after: 80 }
-        }),
+        new Paragraph({ children: [new TextRun({ text: exp.lieu, italics: true, size: 20 })], spacing: { after: 60 } }),
+        new Paragraph({ text: exp.description_court[lang], spacing: { after: 80 } }),
       ]),
 
     // ── COMPÉTENCES ───────────────────────────────────────────────────────────
     sectionHeading(t.skills),
     ...skills.flatMap((cat) => [
-      new Paragraph({
-        children: [new TextRun({ text: cat.categorie, bold: true })],
-        spacing: { before: 120, after: 40 }
-      }),
-      ...cat.items.map(item => bullet(item)),
+      new Paragraph({ children: [new TextRun({ text: cat.categorie[lang], bold: true })], spacing: { before: 120, after: 40 } }),
+      ...cat.items[lang].map(item => bullet(item)),
     ]),
 
     // ── FORMATION ────────────────────────────────────────────────────────────
     sectionHeading(t.education),
     ...education.map((edu) => new Paragraph({
       children: [
-        new TextRun({ text: edu.titre, bold: true }),
+        new TextRun({ text: edu.titre[lang], bold: true }),
         new TextRun({ text: `  |  ${edu.ecole}  |  ${edu.annee}` }),
       ],
       spacing: { before: 120, after: 80 }
@@ -223,15 +205,15 @@ export function generateAtsPdf(lang = "fr") {
       {
         text: [
           { text: r.client, bold: true },
-          { text: `  |  ${r.role}  |  ${r.periode}` }
+          { text: `  |  ${r.role[lang]}  |  ${r.periode}` }
         ],
         style: "jobTitle",
         margin: [0, 8, 0, 2]
       },
-      { text: r.domaine, italics: true, fontSize: 9, color: "#444444", margin: [0, 0, 0, 3] },
-      { text: r.description, style: "body", margin: [0, 0, 0, 3] },
+      { text: r.domaine[lang], italics: true, fontSize: 9, color: "#444444", margin: [0, 0, 0, 3] },
+      { text: r.description[lang], style: "body", margin: [0, 0, 0, 3] },
       { text: t.tasks, bold: true, fontSize: 10, margin: [0, 2, 0, 2] },
-      ...r.taches.map(tache => bullet(tache)),
+      ...r.taches[lang].map(tache => bullet(tache)),
     ]),
 
     // ── EXPÉRIENCE ───────────────────────────────────────────────────────────
@@ -243,27 +225,27 @@ export function generateAtsPdf(lang = "fr") {
         {
           text: [
             { text: exp.entreprise, bold: true },
-            { text: `  |  ${exp.poste}  |  ${exp.periode}` }
+            { text: `  |  ${exp.poste[lang]}  |  ${exp.periode}` }
           ],
           style: "jobTitle",
           margin: [0, 8, 0, 2]
         },
         { text: exp.lieu, italics: true, fontSize: 9, color: "#444444", margin: [0, 0, 0, 3] },
-        { text: exp.description_court, style: "body", margin: [0, 0, 0, 6] },
+        { text: exp.description_court[lang], style: "body", margin: [0, 0, 0, 6] },
       ]),
 
     // ── COMPÉTENCES ───────────────────────────────────────────────────────────
     sectionHeader(t.skills),
     ...skills.flatMap((cat) => [
-      { text: cat.categorie, bold: true, fontSize: 10, margin: [0, 6, 0, 2] },
-      ...cat.items.map(item => bullet(item)),
+      { text: cat.categorie[lang], bold: true, fontSize: 10, margin: [0, 6, 0, 2] },
+      ...cat.items[lang].map(item => bullet(item)),
     ]),
 
     // ── FORMATION ────────────────────────────────────────────────────────────
     sectionHeader(t.education),
     ...education.map((edu) => ({
       text: [
-        { text: edu.titre, bold: true },
+        { text: edu.titre[lang], bold: true },
         { text: `  |  ${edu.ecole}  |  ${edu.annee}` }
       ],
       style: "jobTitle",

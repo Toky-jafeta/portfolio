@@ -1,5 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useInView } from '../../common/hooks/useInView';
+import { useLang } from '../../common/context/LanguageContext';
+import { t, tr } from '../../i18n/translations';
 import { CompetencesTechniques } from '../../datas/competences';
 import { OutilsTechniques } from '../../datas/outils';
 
@@ -96,7 +98,6 @@ const SkillItem = styled.li`
   }
 `;
 
-/* Tools marquee */
 const scroll = keyframes`
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -159,6 +160,7 @@ const ToolPill = styled.span`
 `;
 
 export default function Expertise() {
+  const { lang } = useLang();
   const [headerRef, headerV] = useInView();
   const [gridRef, gridV] = useInView();
   const [toolsRef, toolsV] = useInView();
@@ -168,20 +170,17 @@ export default function Expertise() {
   return (
     <Section id="expertise">
       <Header ref={headerRef} $v={headerV}>
-        <Label>{"// Expertise"}</Label>
-        <Title>Compétences techniques</Title>
-        <Subtitle>
-          Un spectre large de compétences, de l'infrastructure réseau au développement
-          logiciel, en passant par la cybersécurité et le cloud.
-        </Subtitle>
+        <Label>{tr(t.expertise.label, lang)}</Label>
+        <Title>{tr(t.expertise.title, lang)}</Title>
+        <Subtitle>{tr(t.expertise.subtitle, lang)}</Subtitle>
       </Header>
 
       <Grid ref={gridRef}>
         {CompetencesTechniques.map((cat, i) => (
           <Card key={i} $v={gridV} $d={`${i * 0.15}s`}>
-            <CardTitle>{cat.categorie}</CardTitle>
+            <CardTitle>{tr(cat.categorie, lang)}</CardTitle>
             <SkillList>
-              {cat.items.map((item, j) => (
+              {tr(cat.items, lang).map((item, j) => (
                 <SkillItem key={j}>{item}</SkillItem>
               ))}
             </SkillList>
@@ -190,7 +189,7 @@ export default function Expertise() {
       </Grid>
 
       <ToolsSection ref={toolsRef} $v={toolsV}>
-        <ToolsLabel>Outils & Technologies</ToolsLabel>
+        <ToolsLabel>{tr(t.expertise.tools, lang)}</ToolsLabel>
         <MarqueeContainer>
           <MarqueeTrack>
             {[...allTools, ...allTools].map((tool, i) => (

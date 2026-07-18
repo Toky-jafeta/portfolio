@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { motion, animate, useInView } from 'framer-motion';
 import profil from '../../assets/img/profil_nobg.png';
+import { useLang } from '../../common/context/LanguageContext';
+import { t, tr } from '../../i18n/translations';
 
 const float = keyframes`
   0%, 100% { transform: translateY(0px); }
@@ -329,6 +331,7 @@ function Counter({ value, suffix = '', duration = 1.5 }) {
 }
 
 export default function Hero() {
+  const { lang } = useLang();
   const handleClick = (e, id) => {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -341,47 +344,36 @@ export default function Hero() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.9, ease: 'easeOut' }}
       >
-        <Eyebrow>Ingénieur Systèmes, Réseaux & Cybersécurité</Eyebrow>
+        <Eyebrow>{tr(t.hero.eyebrow, lang)}</Eyebrow>
         <Title>
-          Je conçois, sécurise et pilote{' '}
-          <span className="highlight">vos infrastructures IT critiques.</span>
+          {tr(t.hero.title1, lang)}{' '}
+          <span className="highlight">{tr(t.hero.title2, lang)}</span>
         </Title>
-        <Desc>
-          Expert en architectures réseau, cybersécurité et automatisation Python,
-          j'aide les entreprises à innover tout en renforçant leur résilience numérique.
-        </Desc>
+        <Desc>{tr(t.hero.desc, lang)}</Desc>
         <Metrics>
           <Metric>
-            <div className="number">
-              <Counter value={12} suffix="+" />
-            </div>
-            <div className="label">Ans d'expérience</div>
+            <div className="number"><Counter value={12} suffix="+" /></div>
+            <div className="label">{tr(t.hero.yearsExp, lang)}</div>
           </Metric>
           <Metric>
-            <div className="number">
-              <Counter value={50} suffix="+" />
-            </div>
-            <div className="label">Projets livrés</div>
+            <div className="number"><Counter value={50} suffix="+" /></div>
+            <div className="label">{tr(t.hero.projects, lang)}</div>
           </Metric>
           <Metric>
-            <div className="number">
-              <Counter value={4} />
-            </div>
-            <div className="label">Certifs Fortinet</div>
+            <div className="number"><Counter value={4} /></div>
+            <div className="label">{tr(t.hero.certs, lang)}</div>
           </Metric>
           <Metric>
-            <div className="number">
-              <Counter value={5} suffix="+" />
-            </div>
-            <div className="label">Clients majeurs</div>
+            <div className="number"><Counter value={5} suffix="+" /></div>
+            <div className="label">{tr(t.hero.clients, lang)}</div>
           </Metric>
         </Metrics>
         <CTAs>
           <PrimaryBtn href="#realisations" onClick={(e) => handleClick(e, 'realisations')}>
-            Voir mes réalisations →
+            {tr(t.hero.cta1, lang)}
           </PrimaryBtn>
           <SecondaryBtn href="#contact" onClick={(e) => handleClick(e, 'contact')}>
-            Me contacter
+            {tr(t.hero.cta2, lang)}
           </SecondaryBtn>
         </CTAs>
       </Left>

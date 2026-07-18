@@ -141,14 +141,14 @@ export default function AtsModal({ onClose }) {
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'DERNIÈRES RÉALISATIONS' : 'LATEST ACHIEVEMENTS'}</h3>
               {atsResumeData.realisations.slice(0, 3).map((r, i) => (
                 <div key={i} style={{marginBottom: '8px'}}>
-                  <strong>{r.client}</strong> | {r.role} | {r.periode}
-                  <p style={{margin: '2px 0', fontStyle:'italic', fontSize:'0.8rem'}}>{r.domaine}</p>
+                  <strong>{r.client}</strong> | {r.role[lang]} | {r.periode}
+                  <p style={{margin: '2px 0', fontStyle:'italic', fontSize:'0.8rem'}}>{r.domaine[lang]}</p>
                 </div>
               ))}
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'EXPÉRIENCE PROFESSIONNELLE' : 'PROFESSIONAL EXPERIENCE'}</h3>
               {atsResumeData.experience.slice().reverse().slice(0, 3).map((exp, i) => (
                 <div key={i} style={{marginBottom: '6px'}}>
-                  <strong>{exp.entreprise}</strong> | {exp.poste} | {exp.periode}
+                  <strong>{exp.entreprise}</strong> | {exp.poste[lang]} | {exp.periode}
                 </div>
               ))}
               <p style={{color: '#666', textAlign: 'center', marginTop: '10px'}}>

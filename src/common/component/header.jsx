@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useLang } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
+import { t, tr } from '../../i18n/translations';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -11,7 +14,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 0 5%;
-  background: ${({ $scrolled }) => $scrolled ? 'rgba(10, 14, 23, 0.92)' : 'transparent'};
+  background: ${({ $scrolled }) => $scrolled ? 'color-mix(in srgb, var(--bg-primary) 92%, transparent)' : 'transparent'};
   backdrop-filter: ${({ $scrolled }) => $scrolled ? 'blur(20px)' : 'none'};
   border-bottom: ${({ $scrolled }) => $scrolled ? '1px solid var(--border)' : '1px solid transparent'};
   z-index: 1000;
@@ -38,7 +41,7 @@ const Nav = styled.nav`
     right: ${({ $open }) => $open ? '0' : '-100%'};
     width: 100%;
     flex-direction: column;
-    background: rgba(10, 14, 23, 0.98);
+    background: color-mix(in srgb, var(--bg-primary) 98%, transparent);
     backdrop-filter: blur(20px);
     padding: 40px 0;
     gap: 25px;
@@ -106,6 +109,28 @@ const AvailableBadge = styled.div`
   }
 `;
 
+const LangToggle = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+
+  &:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+  }
+`;
+
 const Burger = styled.button`
   display: none;
   cursor: pointer;
@@ -134,16 +159,18 @@ const Burger = styled.button`
 `;
 
 const sections = [
-  { id: 'accueil', label: 'Accueil' },
-  { id: 'apropos', label: 'À propos' },
-  { id: 'expertise', label: 'Expertise' },
-  { id: 'realisations', label: 'Réalisations' },
-  { id: 'services', label: 'Services' },
-  { id: 'certifications', label: 'Certifications' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'accueil',        key: 'home' },
+  { id: 'apropos',        key: 'about' },
+  { id: 'expertise',      key: 'expertise' },
+  { id: 'realisations',   key: 'realisations' },
+  { id: 'services',       key: 'services' },
+  { id: 'certifications', key: 'certifications' },
+  { id: 'contact',        key: 'contact' },
 ];
 
 function Header() {
+  const { lang, toggleLang } = useLang();
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('accueil');
@@ -151,12 +178,10 @@ function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-
       const offsets = sections.map(s => {
         const el = document.getElementById(s.id);
         return el ? { id: s.id, top: el.offsetTop - 100 } : null;
       }).filter(Boolean);
-
       const current = offsets.reverse().find(s => window.scrollY >= s.top);
       if (current) setActiveSection(current.id);
     };
@@ -189,10 +214,16 @@ function Header() {
             className={activeSection === s.id ? 'active' : ''}
             onClick={(e) => handleClick(e, s.id)}
           >
-            {s.label}
+            {tr(t.nav[s.key], lang)}
           </NavLink>
         ))}
-        <AvailableBadge>Disponible</AvailableBadge>
+        <AvailableBadge>{tr(t.nav.available, lang)}</AvailableBadge>
+        <LangToggle onClick={toggleTheme} title="Toggle theme">
+          {theme === 'light' ? '🌙' : '☀️'}
+        </LangToggle>
+        <LangToggle onClick={toggleLang} title="Switch language">
+          {lang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR'}
+        </LangToggle>
       </Nav>
     </HeaderContainer>
   );

@@ -1,14 +1,26 @@
 [
   {
-    "titre": "Master 2 en Ingénierie des Systèmes et Réseaux",
+    "titre": {
+      "fr": "Master 2 en Ingénierie des Systèmes et Réseaux",
+      "en": "Master's Degree in Systems and Network Engineering"
+    },
     "ecole": "École Supérieure Polytechnique d'Antananarivo (ESPA)",
     "annee": "2018",
-    "description": "Spécialisation approfondie en architecture réseau, systèmes distribués et sécurité informatique. Mémoire sur l'optimisation des architectures WAN."
+    "description": {
+      "fr": "Spécialisation approfondie en architecture réseau, systèmes distribués et sécurité informatique. Mémoire sur l'optimisation des architectures WAN.",
+      "en": "In-depth specialization in network architecture, distributed systems and computer security. Thesis on WAN architecture optimization."
+    }
   },
   {
-    "titre": "Licence en Administration des Systèmes et Réseaux",
+    "titre": {
+      "fr": "Licence en Administration des Systèmes et Réseaux",
+      "en": "Bachelor's Degree in Systems and Network Administration"
+    },
     "ecole": "École Supérieure Polytechnique d'Antananarivo (ESPA)",
     "annee": "2016",
-    "description": "Fondamentaux en administration système Linux/Windows, réseaux TCP/IP, routage et commutation."
+    "description": {
+      "fr": "Fondamentaux en administration système Linux/Windows, réseaux TCP/IP, routage et commutation.",
+      "en": "Fundamentals in Linux/Windows system administration, TCP/IP networking, routing and switching."
+    }
   }
 ]
