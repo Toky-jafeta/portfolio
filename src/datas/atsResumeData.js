@@ -23,7 +23,7 @@ export const atsResumeData = {
     email: "trasolomanitra@gmail.com",
     phone: "+261 38 90 016 79",
     location: "Antananarivo, Madagascar",
-    linkedin: "linkedin.com/in/toky-rasolomanitra-121896220",
+    linkedin: "linkedin.com/in/toky-rasolomanitra",
     github: "github.com/Toky-jafeta",
     portfolio: "toky-jafeta.github.io"
   },

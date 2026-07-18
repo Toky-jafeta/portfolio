@@ -283,7 +283,7 @@ const COMMANDS = {
     c.yellow('Email:') + '      trasolomanitra@gmail.com',
     c.yellow('Phone:') + '      +261 38 90 016 79',
     c.yellow('Location:') + '   Antananarivo, Madagascar',
-    c.yellow('LinkedIn:') + '   linkedin.com/in/toky-rasolomanitra-121896220',
+    c.yellow('LinkedIn:') + '   linkedin.com/in/toky-rasolomanitra',
     c.yellow('GitHub:') + '     github.com/Toky-jafeta',
     c.yellow('RootMe:') + '     root-me.org (1055 pts)',
     '',

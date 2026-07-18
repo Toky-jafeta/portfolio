@@ -137,7 +137,7 @@ export default function About() {
         <Title>{tr(t.about.title, lang)}</Title>
         <Subtitle>{tr(t.about.subtitle, lang)}</Subtitle>
         <SocialLinks>
-          <a href="https://www.linkedin.com/in/toky-rasolomanitra-121896220/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/toky-rasolomanitra/" target="_blank" rel="noopener noreferrer">
             <img src={LinkedinLogo} alt="LinkedIn" /> LinkedIn
           </a>
           <a href="https://github.com/Toky-jafeta" target="_blank" rel="noopener noreferrer">

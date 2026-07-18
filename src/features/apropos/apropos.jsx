@@ -393,7 +393,7 @@ function Apropos() {
           <span>{cursorVisible && "|"}</span>
         </p>
         <SocialLinks>
-          <a href="https://www.linkedin.com/in/toky-rasolomanitra-121896220/">
+          <a href="https://www.linkedin.com/in/toky-rasolomanitra/" target="_blank" rel="noopener noreferrer">
             <img src={LinkedinLogo} alt="linkedin" /> LinkedIn
           </a>
           <a href="https://github.com/Toky-jafeta">
