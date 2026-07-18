@@ -2,6 +2,11 @@
 // Supprime le warning "Failed to parse source map" de pdfmake (source map cassée dans leur package npm).
 
 module.exports = {
+  babel: {
+    plugins: [
+      '@babel/plugin-transform-classes'
+    ]
+  },
   webpack: {
     configure: (webpackConfig) => {
       // Ignorer les warnings de source-map-loader provenant de node_modules

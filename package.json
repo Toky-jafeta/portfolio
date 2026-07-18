@@ -61,6 +61,7 @@
   },
   "packageManager": "yarn@4.7.0",
   "devDependencies": {
+    "@babel/plugin-transform-classes": "^8.0.1",
     "@craco/craco": "^7.1.0"
   }
 }
