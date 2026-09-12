@@ -1,5 +1,5 @@
 // src/features/about/AtsGenerator.js
-// Générateur CV optimisé ATS et élégant avec couleurs soignées, texte justifié et sections ordonnées
+// Générateur CV optimisé ATS et élégant avec couleurs soignées, texte justifié et hiérarchie de titres bien différenciée
 
 import { Document, Packer, Paragraph, TextRun, AlignmentType } from "docx";
 import { saveAs } from "file-saver";
@@ -12,10 +12,11 @@ if (pdfMake && pdfFonts) {
   pdfMake.vfs = vfs;
 }
 
-const COLOR_PRIMARY = "003366";    // Bleu Nuit élégant
-const COLOR_ACCENT = "008080";     // Teal / Vert canard
-const COLOR_DARK = "222222";       // Texte sombre pour lisibilité
-const COLOR_MUTED = "555555";      // Sous-titres & métadonnées
+const COLOR_PRIMARY = "003366";    // Bleu Nuit (Titres principaux)
+const COLOR_ACCENT = "008080";     // Teal / Vert canard (Bordures & Dates)
+const COLOR_SUBTITLE = "1A5276";   // Bleu intermédiaire (Sous-titres / Noms d'organisations / Entreprises)
+const COLOR_DARK = "222222";       // Texte sombre pour le corps (Lisibilité)
+const COLOR_MUTED = "555555";      // Métadonnées & détails secondaires
 
 // ─────────────────────────────────────────────────────────────────────────────
 // GÉNÉRATEUR DOCX (Élégant + compatible ATS)
@@ -29,17 +30,25 @@ export async function generateAtsDocx(lang = "fr") {
     role:            isFr ? personalInfo.currentRole.fr     : personalInfo.currentRole.en,
     summary:         isFr ? "PROFIL PROFESSIONNEL"          : "PROFESSIONAL SUMMARY",
     education:       isFr ? "FORMATION"                     : "EDUCATION",
-    certifications:  isFr ? "CERTIFICATIONS"                : "CERTIFICATIONS",
-    realisations:    isFr ? "DERNIÈRES RÉALISATIONS"        : "LATEST ACHIEVEMENTS",
-    experience:      isFr ? "EXPÉRIENCE PROFESSIONNELLE"    : "PROFESSIONAL EXPERIENCE",
     skills:          isFr ? "COMPÉTENCES TECHNIQUES"        : "TECHNICAL SKILLS",
-    tasks:           isFr ? "Missions :"                    : "Tasks:",
+    certifications:  isFr ? "CERTIFICATIONS"                : "CERTIFICATIONS",
+    experience:      isFr ? "EXPÉRIENCE PROFESSIONNELLE"    : "PROFESSIONAL EXPERIENCE",
+    realisations:    isFr ? "DERNIÈRES RÉALISATIONS"        : "LATEST ACHIEVEMENTS",
+    tasks:           isFr ? "Missions principales :"        : "Main Tasks:",
   };
 
+  // Grand Titre de Section (H1) avec ligne de séparation Teal sous le titre
   const sectionHeading = (text) => new Paragraph({
-    children: [new TextRun({ text, bold: true, size: 24, color: COLOR_PRIMARY })],
-    spacing: { before: 260, after: 100 },
-    border: { bottom: { color: COLOR_ACCENT, space: 2, value: "single", size: 8 } }
+    children: [
+      new TextRun({
+        text: `■  ${text}`,
+        bold: true,
+        size: 24, // 12pt
+        color: COLOR_PRIMARY
+      })
+    ],
+    spacing: { before: 300, after: 100 },
+    border: { bottom: { color: COLOR_ACCENT, space: 3, value: "single", size: 12 } }
   });
 
   const bullet = (text) => new Paragraph({
@@ -89,37 +98,26 @@ export async function generateAtsDocx(lang = "fr") {
     ...education.map((edu) => new Paragraph({
       alignment: AlignmentType.JUSTIFY,
       children: [
-        new TextRun({ text: edu.titre[lang], bold: true, color: COLOR_PRIMARY, size: 21 }),
+        new TextRun({ text: edu.titre[lang], bold: true, color: COLOR_SUBTITLE, size: 21 }),
         new TextRun({ text: `  |  ${edu.ecole}`, color: COLOR_MUTED, italics: true, size: 20 }),
         new TextRun({ text: `  |  ${edu.annee}`, color: COLOR_ACCENT, bold: true, size: 20 }),
       ],
       spacing: { before: 100, after: 60 }
     })),
 
-    // ── 3. CERTIFICATIONS ────────────────────────────────────────────────────
+    // ── 3. COMPÉTENCES TECHNIQUES (Déplacé juste après la formation) ─────────
+    sectionHeading(t.skills),
+    ...skills.flatMap((cat) => [
+      new Paragraph({
+        children: [new TextRun({ text: `► ${cat.categorie[lang]}`, bold: true, color: COLOR_SUBTITLE, size: 21 })],
+        spacing: { before: 140, after: 40 }
+      }),
+      ...cat.items[lang].map(item => bullet(item)),
+    ]),
+
+    // ── 4. CERTIFICATIONS ────────────────────────────────────────────────────
     sectionHeading(t.certifications),
     ...certifications.map((cert) => bullet(`${cert.nom}  –  ${cert.organisme}  (${cert.annee})`)),
-
-    // ── 4. RÉALISATIONS ──────────────────────────────────────────────────────
-    sectionHeading(t.realisations),
-    ...realisations.slice().reverse().flatMap((r) => [
-      new Paragraph({
-        children: [
-          new TextRun({ text: r.client, bold: true, color: COLOR_PRIMARY, size: 21 }),
-          new TextRun({ text: `  |  ${r.role[lang]}`, color: COLOR_DARK, bold: true, size: 20 }),
-          new TextRun({ text: `  |  ${r.periode}`, color: COLOR_ACCENT, size: 20 }),
-        ],
-        spacing: { before: 160, after: 40 }
-      }),
-      new Paragraph({ children: [new TextRun({ text: r.domaine[lang], italics: true, color: COLOR_MUTED, size: 19 })], spacing: { after: 60 } }),
-      new Paragraph({
-        alignment: AlignmentType.JUSTIFY,
-        children: [new TextRun({ text: r.description[lang], color: COLOR_DARK, size: 20 })],
-        spacing: { after: 60 }
-      }),
-      new Paragraph({ children: [new TextRun({ text: t.tasks, bold: true, color: COLOR_PRIMARY, size: 20 })], spacing: { after: 40 } }),
-      ...r.taches[lang].map(tache => bullet(tache)),
-    ]),
 
     // ── 5. EXPÉRIENCE PROFESSIONNELLE ────────────────────────────────────────
     sectionHeading(t.experience),
@@ -129,7 +127,7 @@ export async function generateAtsDocx(lang = "fr") {
       .flatMap((exp) => [
         new Paragraph({
           children: [
-            new TextRun({ text: exp.entreprise, bold: true, color: COLOR_PRIMARY, size: 21 }),
+            new TextRun({ text: exp.entreprise, bold: true, color: COLOR_SUBTITLE, size: 21 }),
             new TextRun({ text: `  |  ${exp.poste[lang]}`, color: COLOR_DARK, bold: true, size: 20 }),
             new TextRun({ text: `  |  ${exp.periode}`, color: COLOR_ACCENT, size: 20 }),
           ],
@@ -143,11 +141,25 @@ export async function generateAtsDocx(lang = "fr") {
         }),
       ]),
 
-    // ── 6. COMPÉTENCES TECHNIQUES ─────────────────────────────────────────────
-    sectionHeading(t.skills),
-    ...skills.flatMap((cat) => [
-      new Paragraph({ children: [new TextRun({ text: cat.categorie[lang], bold: true, color: COLOR_PRIMARY, size: 20 })], spacing: { before: 120, after: 40 } }),
-      ...cat.items[lang].map(item => bullet(item)),
+    // ── 6. DERNIÈRES RÉALISATIONS (Déplacé en dernier) ────────────────────────
+    sectionHeading(t.realisations),
+    ...realisations.slice().reverse().flatMap((r) => [
+      new Paragraph({
+        children: [
+          new TextRun({ text: r.client, bold: true, color: COLOR_SUBTITLE, size: 21 }),
+          new TextRun({ text: `  |  ${r.role[lang]}`, color: COLOR_DARK, bold: true, size: 20 }),
+          new TextRun({ text: `  |  ${r.periode}`, color: COLOR_ACCENT, size: 20 }),
+        ],
+        spacing: { before: 160, after: 40 }
+      }),
+      new Paragraph({ children: [new TextRun({ text: r.domaine[lang], italics: true, color: COLOR_MUTED, size: 19 })], spacing: { after: 60 } }),
+      new Paragraph({
+        alignment: AlignmentType.JUSTIFY,
+        children: [new TextRun({ text: r.description[lang], color: COLOR_DARK, size: 20 })],
+        spacing: { after: 60 }
+      }),
+      new Paragraph({ children: [new TextRun({ text: t.tasks, bold: true, color: COLOR_SUBTITLE, size: 20 })], spacing: { after: 40 } }),
+      ...r.taches[lang].map(tache => bullet(tache)),
     ]),
   ];
 
@@ -181,16 +193,19 @@ export function generateAtsPdf(lang = "fr") {
     role:            isFr ? personalInfo.currentRole.fr     : personalInfo.currentRole.en,
     summary:         isFr ? "PROFIL PROFESSIONNEL"          : "PROFESSIONAL SUMMARY",
     education:       isFr ? "FORMATION"                     : "EDUCATION",
-    certifications:  isFr ? "CERTIFICATIONS"                : "CERTIFICATIONS",
-    realisations:    isFr ? "DERNIÈRES RÉALISATIONS"        : "LATEST ACHIEVEMENTS",
-    experience:      isFr ? "EXPÉRIENCE PROFESSIONNELLE"    : "PROFESSIONAL EXPERIENCE",
     skills:          isFr ? "COMPÉTENCES TECHNIQUES"        : "TECHNICAL SKILLS",
-    tasks:           isFr ? "Missions :"                    : "Tasks:",
+    certifications:  isFr ? "CERTIFICATIONS"                : "CERTIFICATIONS",
+    experience:      isFr ? "EXPÉRIENCE PROFESSIONNELLE"    : "PROFESSIONAL EXPERIENCE",
+    realisations:    isFr ? "DERNIÈRES RÉALISATIONS"        : "LATEST ACHIEVEMENTS",
+    tasks:           isFr ? "Missions principales :"        : "Main Tasks:",
   };
 
+  // Grand Titre de Section avec fond très léger et grand texte en majuscule
   const sectionHeader = (text) => ({
-    text,
-    style: "sectionHeader",
+    text: [
+      { text: "■  ", color: "#008080", fontSize: 11 },
+      { text: text, color: "#003366", fontSize: 12, bold: true }
+    ],
     margin: [0, 16, 0, 6]
   });
 
@@ -221,7 +236,7 @@ export function generateAtsPdf(lang = "fr") {
     sectionHeader(t.education),
     ...education.map((edu) => ({
       text: [
-        { text: edu.titre[lang], bold: true, color: "#003366" },
+        { text: edu.titre[lang], bold: true, color: "#1A5276", fontSize: 10.5 },
         { text: `  |  ${edu.ecole}`, color: "#555555" },
         { text: `  |  ${edu.annee}`, color: "#008080", bold: true }
       ],
@@ -229,27 +244,16 @@ export function generateAtsPdf(lang = "fr") {
       margin: [0, 5, 0, 3]
     })),
 
-    // ── 3. CERTIFICATIONS ────────────────────────────────────────────────────
+    // ── 3. COMPÉTENCES TECHNIQUES (Déplacé juste après la formation) ─────────
+    sectionHeader(t.skills),
+    ...skills.flatMap((cat) => [
+      { text: `► ${cat.categorie[lang]}`, bold: true, fontSize: 10.5, color: "#1A5276", margin: [0, 6, 0, 2] },
+      ...cat.items[lang].map(item => bullet(item)),
+    ]),
+
+    // ── 4. CERTIFICATIONS ────────────────────────────────────────────────────
     sectionHeader(t.certifications),
     ...certifications.map((cert) => bullet(`${cert.nom}  –  ${cert.organisme}  (${cert.annee})`)),
-
-    // ── 4. RÉALISATIONS ──────────────────────────────────────────────────────
-    sectionHeader(t.realisations),
-    ...realisations.slice().reverse().flatMap((r) => [
-      {
-        text: [
-          { text: r.client, bold: true, color: "#003366" },
-          { text: `  |  ${r.role[lang]}`, bold: true, color: "#222222" },
-          { text: `  |  ${r.periode}`, color: "#008080" }
-        ],
-        style: "jobTitle",
-        margin: [0, 8, 0, 2]
-      },
-      { text: r.domaine[lang], italics: true, fontSize: 9, color: "#555555", margin: [0, 0, 0, 3] },
-      { text: r.description[lang], style: "body", margin: [0, 0, 0, 3] },
-      { text: t.tasks, bold: true, fontSize: 10, color: "#003366", margin: [0, 3, 0, 2] },
-      ...r.taches[lang].map(tache => bullet(tache)),
-    ]),
 
     // ── 5. EXPÉRIENCE PROFESSIONNELLE ────────────────────────────────────────
     sectionHeader(t.experience),
@@ -259,7 +263,7 @@ export function generateAtsPdf(lang = "fr") {
       .flatMap((exp) => [
         {
           text: [
-            { text: exp.entreprise, bold: true, color: "#003366" },
+            { text: exp.entreprise, bold: true, color: "#1A5276", fontSize: 10.5 },
             { text: `  |  ${exp.poste[lang]}`, bold: true, color: "#222222" },
             { text: `  |  ${exp.periode}`, color: "#008080" }
           ],
@@ -270,11 +274,22 @@ export function generateAtsPdf(lang = "fr") {
         { text: exp.description_court[lang], style: "body", margin: [0, 0, 0, 6] },
       ]),
 
-    // ── 6. COMPÉTENCES TECHNIQUES ─────────────────────────────────────────────
-    sectionHeader(t.skills),
-    ...skills.flatMap((cat) => [
-      { text: cat.categorie[lang], bold: true, fontSize: 10, color: "#003366", margin: [0, 6, 0, 2] },
-      ...cat.items[lang].map(item => bullet(item)),
+    // ── 6. DERNIÈRES RÉALISATIONS (Déplacé en dernier) ────────────────────────
+    sectionHeader(t.realisations),
+    ...realisations.slice().reverse().flatMap((r) => [
+      {
+        text: [
+          { text: r.client, bold: true, color: "#1A5276", fontSize: 10.5 },
+          { text: `  |  ${r.role[lang]}`, bold: true, color: "#222222" },
+          { text: `  |  ${r.periode}`, color: "#008080" }
+        ],
+        style: "jobTitle",
+        margin: [0, 8, 0, 2]
+      },
+      { text: r.domaine[lang], italics: true, fontSize: 9, color: "#555555", margin: [0, 0, 0, 3] },
+      { text: r.description[lang], style: "body", margin: [0, 0, 0, 3] },
+      { text: t.tasks, bold: true, fontSize: 10, color: "#1A5276", margin: [0, 3, 0, 2] },
+      ...r.taches[lang].map(tache => bullet(tache)),
     ]),
   ];
 
@@ -282,7 +297,7 @@ export function generateAtsPdf(lang = "fr") {
     content,
     styles: {
       name: {
-        fontSize: 20,
+        fontSize: 22,
         bold: true,
         color: "#003366",
         alignment: "center",
@@ -301,12 +316,6 @@ export function generateAtsPdf(lang = "fr") {
         color: "#555555",
         alignment: "center",
         margin: [0, 0, 0, 2]
-      },
-      sectionHeader: {
-        fontSize: 11,
-        bold: true,
-        color: "#003366",
-        margin: [0, 14, 0, 4]
       },
       jobTitle: {
         fontSize: 10,
@@ -343,4 +352,5 @@ export function generateAtsPdf(lang = "fr") {
     .createPdf(docDefinition)
     .download(`CV_ATS_${personalInfo.lastName}_${personalInfo.firstName}_${lang.toUpperCase()}.pdf`);
 }
+
 
