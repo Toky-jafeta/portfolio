@@ -1,10 +1,58 @@
 [
   {
+    "id": "CSCO15273302",
+    "nom": "Cisco Certified Network Associate (CCNA)",
+    "organisme": "Cisco",
+    "annee": "2026",
+    "image": "/certificat/cisco_ccna.jpg",
+    "pdf": "/certificat/Cisco Certified Network Associate certificate.pdf"
+  },
+  {
+    "id": "5424939835TR",
+    "nom": "Fortinet NSE 6 Certified in Secure Networking",
+    "organisme": "Fortinet Institute",
+    "annee": "2025",
+    "image": "/certificat/fortinet_nse6.jpg",
+    "pdf": "/certificat/Fortinet NSE 6 Certified in Secure Networking.pdf"
+  },
+  {
+    "id": "0430109934TR",
+    "nom": "Fortinet NSE 4 Certified in FortiOS",
+    "organisme": "Fortinet Institute",
+    "annee": "2025",
+    "image": "/certificat/fortinet_nse4.jpg",
+    "pdf": "/certificat/Fortinet NSE 4 Certified in FortiOS.pdf"
+  },
+  {
     "id": "1111706789TR",
     "nom": "Fortinet Certified Professional Network Security (FCP)",
-    "organisme": "Fortinet institute",
+    "organisme": "Fortinet Institute",
     "annee": "2025",
     "image": "/certificat/fortinet_certified_profesionnal.jpg"
+  },
+  {
+    "id": "3678410274TR",
+    "nom": "Fortinet NSE 3 Certified in Cybersecurity",
+    "organisme": "Fortinet Institute",
+    "annee": "2024",
+    "image": "/certificat/fortinet_nse3.jpg",
+    "pdf": "/certificat/Fortinet NSE 3 Certified in Cybersecurity.pdf"
+  },
+  {
+    "id": "5706438985TR",
+    "nom": "Fortinet NSE 2 Certified in Cybersecurity",
+    "organisme": "Fortinet Institute",
+    "annee": "2024",
+    "image": "/certificat/fortinet_nse2.jpg",
+    "pdf": "/certificat/Fortinet NSE 2 Certified in Cybersecurity.pdf"
+  },
+  {
+    "id": "1633350083TR",
+    "nom": "Fortinet NSE 1 Certified in Cybersecurity",
+    "organisme": "Fortinet Institute",
+    "annee": "2024",
+    "image": "/certificat/fortinet_nse1.jpg",
+    "pdf": "/certificat/Fortinet NSE 1 Certified in Cybersecurity.pdf"
   },
   {
     "id": "9308953504TR",
@@ -19,7 +67,6 @@
     "organisme": "Fortinet Institute",
     "annee": "2024",
     "image": "/certificat/Fortinet_certified_fundamentals.png"
-    
   },
   {
     "id": "10XK4SYF7XWTZ",
@@ -30,7 +77,7 @@
   },
   {
     "id": "10XK4RAP9CRII",
-    "nom": "Introduction a docker",
+    "nom": "Introduction à Docker",
     "organisme": "Datascientist.fr",
     "annee": "2025",
     "image": "/certificat/docker.jpg"
