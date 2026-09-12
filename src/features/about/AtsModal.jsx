@@ -137,17 +137,33 @@ export default function AtsModal({ onClose }) {
               <p style={{textAlign: 'center', margin: '0 0 4px 0', fontStyle:'italic'}}>{lang === 'fr' ? atsResumeData.personalInfo.currentRole.fr : atsResumeData.personalInfo.currentRole.en}</p>
               <p style={{textAlign: 'center', margin: '0 0 12px 0', fontSize:'0.8rem'}}>{atsResumeData.personalInfo.location} | {atsResumeData.personalInfo.email}</p>
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'PROFIL PROFESSIONNEL' : 'PROFESSIONAL SUMMARY'}</h3>
-              <p style={{margin: '0 0 10px'}}>{atsResumeData.personalInfo.summary[lang]}</p>
+              <p style={{margin: '0 0 10px', textAlign: 'justify'}}>{atsResumeData.personalInfo.summary[lang]}</p>
+              
+              <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'FORMATION' : 'EDUCATION'}</h3>
+              {atsResumeData.education.map((edu, i) => (
+                <div key={i} style={{marginBottom: '4px'}}>
+                  <strong>{edu.titre[lang]}</strong> | {edu.ecole} | {edu.annee}
+                </div>
+              ))}
+
+              <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'CERTIFICATIONS' : 'CERTIFICATIONS'}</h3>
+              {atsResumeData.certifications.slice(0, 4).map((c, i) => (
+                <div key={i} style={{marginBottom: '2px'}}>
+                  • {c.nom} ({c.annee})
+                </div>
+              ))}
+
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'DERNIÈRES RÉALISATIONS' : 'LATEST ACHIEVEMENTS'}</h3>
-              {atsResumeData.realisations.slice().reverse().slice(0, 3).map((r, i) => (
-                <div key={i} style={{marginBottom: '8px'}}>
+              {atsResumeData.realisations.slice().reverse().slice(0, 2).map((r, i) => (
+                <div key={i} style={{marginBottom: '8px', textAlign: 'justify'}}>
                   <strong>{r.client}</strong> | {r.role[lang]} | {r.periode}
                   <p style={{margin: '2px 0', fontStyle:'italic', fontSize:'0.8rem'}}>{r.domaine[lang]}</p>
                 </div>
               ))}
+
               <h3 style={{borderBottom: '1px solid #000', margin: '10px 0 5px'}}>{lang === 'fr' ? 'EXPÉRIENCE PROFESSIONNELLE' : 'PROFESSIONAL EXPERIENCE'}</h3>
-              {atsResumeData.experience.slice().reverse().slice(0, 3).map((exp, i) => (
-                <div key={i} style={{marginBottom: '6px'}}>
+              {atsResumeData.experience.slice().reverse().slice(0, 2).map((exp, i) => (
+                <div key={i} style={{marginBottom: '6px', textAlign: 'justify'}}>
                   <strong>{exp.entreprise}</strong> | {exp.poste[lang]} | {exp.periode}
                 </div>
               ))}
